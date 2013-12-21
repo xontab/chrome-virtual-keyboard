@@ -1,0 +1,28 @@
+<script src="toggle.js"></script>
+<style>
+	body { font-family: 'Segoe UI', Tahoma, sans-serif; width: 300px; margin: 0; padding: 0; -webkit-user-select: none; }
+	ul, li { list-style: none; margin: 0; padding: 0; }
+	li { cursor: pointer; padding: 10px; font-size: 15px; margin: 5px 0; color: #999; border-left: 3px solid transparent; -webkit-transition: all 0.3s; }
+	li:hover { color: #555; border-left: 6px solid #555; }
+	li:active, li.active { color: #000; border-left: 6px solid #000; }
+	ul li ul { overflow: hidden; }
+	ul li ul li {
+		float: left;
+		border: 1px solid #999;
+		border-radius: 3px;
+		margin-left: 3px;
+		margin-top: 10px;
+		font-size: 13px;
+	}
+</style>
+<ul>
+	<li>Toggle Keyboard 
+		<ul>
+			<li id="toggleOn">Always On</li>
+			<li id="toggleDemand">On-Demand</li>
+			<li id="toggleOff">Turn Off</li>
+		</ul>
+	</li>
+	<li id="goToUrl">Open URL bar</li>
+	<li id="settings">Open Virtual Keyboard Settings</li>
+</ul>
