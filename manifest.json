@@ -2,7 +2,7 @@
   "name": "Chrome Virtual Keyboard",
   "description": "Fullscreen on-screen virtual keyboard for touch screen devices",
   "manifest_version": 2,
-  "version": "1.10.0",
+  "version": "1.10.2",
   "icons": { "16": "keyboard.png",
            "48": "keyboard.png",
           "128": "keyboard.png" },
