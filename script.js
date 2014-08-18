@@ -291,6 +291,13 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						if ((key.charCodeAt(0) >= 97) && (key.charCodeAt(0) <= 122)) {
 							key = String.fromCharCode(key.charCodeAt(0)-32);
 						}
+						if ((key.charCodeAt(0) >= 224) && (key.charCodeAt(0) <= 252)) {
+							key = String.fromCharCode(key.charCodeAt(0)-32);
+						}						
+						// 'ű' and 'ő'
+						if((key.charCodeAt(0) == 337) || (key.charCodeAt(0) == 369)) {
+							key = String.fromCharCode(key.charCodeAt(0)-1);
+						}
 					}
 					virtualKeyboardChromeExtensionClickedElem.value = virtualKeyboardChromeExtensionClickedElem.value.substr(0, pos)+key+virtualKeyboardChromeExtensionClickedElem.value.substr(posEnd);
 					virtualKeyboardChromeExtensionClickedElem.selectionStart = pos+1;
