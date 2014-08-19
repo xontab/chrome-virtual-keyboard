@@ -58,7 +58,7 @@
 	position: absolute !important; 
 	width: 50px !important;
 	height: 35px !important;
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/buttons/keyboard_1.png) !important;
+	background-image: url(/buttons/keyboard_1.png) !important;
 	background-position: center !important;
 	background-repeat: no-repeat !important;
 	cursor: pointer;
@@ -74,7 +74,7 @@
 	background-color: rgba(255, 255, 255, 1) !important;
 }
 #virtualKeyboardChromeExtension.modeS [_key=Backspace].kbdClick span {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/backspace.png) !important;
+	background-image: url(/icons/backspace.png) !important;
 	font-size: 0px !important;
 	color: transparent !important;
 	text-shadow: none !important;
@@ -166,7 +166,7 @@
 
 @media only screen and (max-width:1200px){
 	#virtualKeyboardChromeExtension [_key=Backspace].kbdClick span {
-		background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/backspace.png) !important;
+		background-image: url(/icons/backspace.png) !important;
 		font-size: 0px !important;
 		color: transparent !important;
 		text-shadow: none !important;
@@ -174,7 +174,7 @@
 }
 @media only screen and (max-width:1200px){
 	#virtualKeyboardChromeExtension [_key=Enter].kbdClick span {
-		background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/enter.png) !important;
+		background-image: url(/icons/enter.png) !important;
 		font-size: 0px !important;
 		color: transparent !important;
 		text-shadow: none !important;
@@ -182,15 +182,15 @@
 }
 
 #virtualKeyboardChromeExtension [_key=Enter] span {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/enter-e.png);
+	background-image: url(/icons/enter-e.png);
 }
 
 #virtualKeyboardChromeExtension [_key=Backspace] span {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/backspace-e.png);
+	background-image: url(/icons/backspace-e.png);
 }
 
 #virtualKeyboardChromeExtension .kbdHBS span {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/backspace.png);
+	background-image: url(/icons/backspace.png);
 	font-size: 0px !important;
 	color: transparent !important;
 	text-shadow: none !important;
@@ -307,19 +307,19 @@
 	line-height: 14px !important;
 }
 #virtualKeyboardChromeExtension table td span.kShift {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/shift.png);
+	background-image: url(/icons/shift.png);
 }
 #virtualKeyboardChromeExtension table td span.kBack {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/backspace.png);
+	background-image: url(/icons/backspace.png);
 }
 #virtualKeyboardChromeExtension table td span.kClose {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/close.png);
+	background-image: url(/icons/close.png);
 }
 #virtualKeyboardChromeExtension table td span.kEnter {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/enter.png);
+	background-image: url(/icons/enter.png);
 }
 #virtualKeyboardChromeExtension table td.kSettings span {
-	background-image: url(chrome-extension://anmjegipechokjhdebpjcohlkdcgdpgm/icons/settings.png);
+	background-image: url(/icons/settings.png);
 }
 #virtualKeyboardChromeExtension table td span.kAbc {
 	font-size: 22px !important;
