@@ -3,7 +3,7 @@ function kl_add() {
 	for (var i=0; i<o.length; i++) {
 		if (o[i].selected) {
 			var opt = document.createElement("option");
-		    opt.text = o[i].innerText;
+		    opt.text = o[i].innerHTML;
 			opt.value = o[i].value;
 			var os = document.getElementById("sl").options;
 			var exists = false;
@@ -24,7 +24,7 @@ function kl_save() {
 	var o = document.getElementById("sl").options;
 	for (var i=0; i<o.length; i++) {
 		if (o[i].value != undefined) {
-			a.push({ value: o[i].value, name: o[i].innerText });
+			a.push({ value: o[i].value, name: o[i].innerHTML });
 		}
 	}
 	localStorage["keyboardLayoutsList"] = JSON.stringify(a);

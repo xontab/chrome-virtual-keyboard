@@ -217,16 +217,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						);
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
 						delete form;
-						
-						
-					/*
-						var inputs = virtualKeyboardChromeExtensionClickedElem.parentNode.parentNode.parentNode.getElementsByTagName("input")
-						for (var i=0; i<inputs.length; i++) {
-							if (inputs[i].type == "submit") {
-								inputs[i].click();
-							}
-						}
-						*/
+
 						virtualKeyboardChromeExtensionState = false;
 						if (virtualKeyboardChromeExtensionFullScreenState) {
 							if (hardwareAcceleration) {
@@ -267,6 +258,20 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 				virtualKeyboardChromeExtensionClickedElem.selectionStart = pos;
 				virtualKeyboardChromeExtensionClickedElem.selectionEnd = pos;
                 virtualKeyboardChromeExtensionElemChanged=true;
+				var keyboardEvent = document.createEvent("Events");
+				keyboardEvent.initEvent("keydown", true, true);
+				keyboardEvent.keyCode = keyboardEvent.which = 8; // Backspace
+				virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
+				
+				keyboardEvent = document.createEvent("Events");
+				keyboardEvent.initEvent("keypress", true, true);
+				keyboardEvent.keyCode = keyboardEvent.which = 8; // Backspace
+				
+				virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
+				keyboardEvent = document.createEvent("Events");
+				keyboardEvent.initEvent("keyup", true, true);
+				keyboardEvent.keyCode = keyboardEvent.which = 8; // Backspace
+				virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
 				break;
 			default:
 				if (virtualKeyboardChromeExtensionClickedElem != undefined) {
@@ -294,7 +299,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						if ((key.charCodeAt(0) >= 224) && (key.charCodeAt(0) <= 252)) {
 							key = String.fromCharCode(key.charCodeAt(0)-32);
 						}						
-						// 'ű' and 'ő'
+						// 'Å±' and 'Å‘'
 						if((key.charCodeAt(0) == 337) || (key.charCodeAt(0) == 369)) {
 							key = String.fromCharCode(key.charCodeAt(0)-1);
 						}
