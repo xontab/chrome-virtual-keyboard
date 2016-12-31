@@ -7,4 +7,4 @@ This extension is ideal for touch screen devices. This keyboard works like an iO
 
 <img src="http://xontab.azurewebsites.net/Content/VirtualKeyboard/1.png" alt="" />
 
-For more details visit: http://apps.xontab.com/VirtualKeyboard
+For more details visit: http://xontab.com/Apps/VirtualKeyboard/
