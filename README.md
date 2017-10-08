@@ -15,5 +15,7 @@ For more details visit: http://xontab.com/Apps/VirtualKeyboard/
 Planned features are:
 * Better support with WebComponents, Angular 1, 2+ and React
 * Add support to HTML ContentEditable
+* More developer options
+* Refactoring and Documenation
 
 You can also suggest new features: https://apps.xontab.com/Suggest/VirtualKeyboard/
