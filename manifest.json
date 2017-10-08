@@ -2,39 +2,42 @@
   "name": "Virtual Keyboard",
   "description": "Fullscreen on-screen virtual keyboard for touch screen devices",
   "manifest_version": 2,
-  "version": "1.11.1",
-  "icons": { "16": "keyboard.png",
-           "48": "keyboard.png",
-          "128": "keyboard.png" },
+  "version": "1.12",
+  "icons": {
+    "16": "keyboard.png",
+    "48": "keyboard.png",
+    "128": "keyboard.png"
+  },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "options_page": "options.html",
-   "page_action": {
+  "page_action": {
     "default_icon": "buttons/keyboard_2.png",
-	"default_title": "Virtual Keyboard Toggle",
+    "default_title": "Virtual Keyboard Toggle",
     "default_popup": "toggle.html"
   },
   "permissions": [
-	  "tabs", "<all_urls>"
-	],
+    "tabs",
+    "<all_urls>"
+  ],
   "web_accessible_resources": [
     "keyboard.html",
-    "keyboard_*.html",
-    "keyboard_en.html",
-    "keyboard_ru.html",
+    "layouts/keyboard_*.html",
     "style.css",
     "options.js",
     "toggle.html",
     "toggle.js",
     "icons/*",
-	"icons/backspace.png",
-	"icons/backspace-e.png",
-	"icons/close.png",
-	"icons/enter.png",
-	"icons/enter-e.png",
-	"icons/settings.png",
-	"icons/shift.png",
+    "icons/backspace.png",
+    "icons/backspace-e.png",
+    "icons/close.png",
+    "icons/enter.png",
+    "icons/enter-e.png",
+    "icons/settings.png",
+    "icons/shift.png",
     "buttons/*",
     "buttons/keyboard_1.png",
     "buttons/keyboard_2.png",
@@ -43,10 +46,14 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["script.js"],
-	  "run_at": "document_end",
-	  "all_frames": true
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "script.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
     }
   ]
 }

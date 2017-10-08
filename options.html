@@ -1,281 +1,377 @@
 <!DOCTYPE HTML>
 <html id="t" i18n-values="dir:textdirection">
+
 <head>
-<meta charset="utf-8">
-<title i18n-content="optionsPageTitle">Virtual Keyboard Settings</title>
-<style>
-body.loaded {
-	opacity: 1;
-}
-#page {
-	-webkit-transition: all 0.55s ease-out;
-	-webkit-transform: scale(0.9) translate3d(-200px,0,0);
-	width: 900px;
-}
-body.loaded #page {
-	-webkit-transform:  translate3d(30px,0,0) perspective(800);
-}
-select::-webkit-scrollbar {
-	width: 5px;
-	height: 5px;
-}
- 
-select::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); 
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	background-color: #eee;
-}
- 
-select::-webkit-scrollbar-thumb {
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
-	-webkit-transition: all 0.2s;	
-	background-color: #666;
-}
+	<meta charset="utf-8">
+	<title i18n-content="optionsPageTitle">Virtual Keyboard Settings</title>
+	<style>
+		body.loaded {
+			opacity: 1;
+		}
 
-body {
-	font-family: 'Segoe UI', Tahoma, sans-serif;
-	color: #333;
-	margin: 30px;
-	background-color: #fefefe;
-	padding-bottom: 20px;
-	opacity: 0;
-	-webkit-transition: all 1.5s;
-}
-h1, h2 {
-	font-size: 30px;
-	margin: 0;
-	font-weight: normal;
-	letter-spacing: -1px;
-}
-h2 {
-	font-size: 20px;
-	margin-bottom: 10px;
-	color: #555;
-	margin-top: 30px;
-}
+		#page {
+			-webkit-transition: all 0.55s ease-out;
+			-webkit-transform: scale(0.9) translate3d(-230px, 0, 0);
+			min-width: 1000px;
+			padding: 30px;
+			padding-top: 80px;
+			padding-left: 60px;
+		}
 
-#options {
-	margin-top: 30px;
-	font-size: 14px;
-}
-#footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border-top: 1px solid #BBB;
-	padding: 10px 30px;
-	font-size: 13px;
-	color: #222;
-	background-color: rgba(255,255,255,0.8);
-	box-shadow: 0px 0px 10px rgba(0,0,0,0.07);
-	z-index: 100;
-}
- select, input[type='checkbox'], input[type='radio'] {
-	-webkit-appearance: none;
-	-webkit-user-select: none;
-	background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
-	border: 1px solid rgba(0, 0, 0, 0.25);
-	border-radius: 2px;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
-	color: #444;
-	font: inherit;
-	margin: 0 1px 0 0;
-	text-shadow: 0 1px 0 rgb(240, 240, 240);
-}
-select, select:hover, select:focus {
-	background: #fff;
-	box-shadow: inset 1px 1px 5px rgba(0,0,0,0.1);
-	background-image: none !important;
-}
-:enabled:hover:-webkit-any( select, input[type='checkbox'], input[type='radio'], :-webkit-any( button, input[type='button'], input[type='submit']):not(.custom-appearance):not(.link-button)) {
-	background-image: -webkit-linear-gradient(#f0f0f0, #f0f0f0 38%, #e0e0e0);
-	border-color: rgba(0, 0, 0, 0.3);
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.95);
-	color: black;
-}
-input[type='checkbox']:checked::before {
-	-webkit-user-select: none;
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAcklEQVQY02NgwA/YoJgoEA/Es4DYgJBCJSBeD8SboRinBiYg7kZS2IosyQ/Eakh8LySFq4FYHFlxGRBvBOJYqMRqJMU+yApNkSRAeC0Sux3dfSCTetE0wKyXxOWhMKhTYIr9CAUXyJMzgLgBagBBgDPGAI2LGdNt0T1AAAAAAElFTkSuQmCC');
-	background-size: 100% 100%;
-	content: '';
-	display: block;
-	height: 100%;
-	width: 100%;
-}
-input[type='checkbox'] {
-	bottom: 2px;
-	height: 13px;
-	position: relative;
-	vertical-align: middle;
-	width: 13px;
-}
-select {
-	border: 1px solid #999;
-	border-radius: 3px;
-}
-select, input, button {
-	-webkit-transition: all 0.3s;
-	outline: none;
-}
-select:focus, input:focus, button:active {
-	border: 1px solid #15C !important;
-}
-#footer a {
-	color: #000;
-	-webkit-transition: all 0.4s;
-	text-decoration: none;	
-	border-bottom: 1px solid #fff;	
-}
-#footer a:hover {
-	border-bottom: 1px solid #333;	
-}
-#links {
-	position: fixed;
-	top: 35px;
-	bottom: 0;
-	right: 0;
-	z-index: 1;
-	padding-right: 100px;
-	box-shadow: 1px 10px 10px rgba(0,0,0,0.1);
-	padding-left: 25px;
-}
-#links a {
-	display: inline-block;
-	text-decoration: none;
-	-webkit-transition: all 0.4s;	
-	color: #888;
-	border-bottom: 1px solid #fff;
-	padding: 2px 5px;
-	margin: 5px 0;
-	font-size: 13px;
-}
-#links a:hover {
-	border-bottom: 1px solid #333;
-	color: #333;
-}
-select {
-	padding: 5px;
-}
-select.layout {
-	height: 200px;
-	width: 150px;
-}
-label {
-	padding: 7px 0;
-	display: block;
-}
-th {
-	font-size: 15px;
-	text-align: left;
-	font-weight: normal;
-	padding-top: 20px;
-}
-button {
-	-webkit-appearance: none;
-	-webkit-user-select: none;
-	background-image: -webkit-linear-gradient(#EDEDED, #EDEDED 38%, #DEDEDE);
-	border: 1px solid rgba(0, 0, 0, 0.25);
-	border-radius: 2px;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
-	color: #000;
-	font: inherit;
-	margin: 5px 10px;
-	text-shadow: 0 1px 0 #F0F0F0;
-	padding: 5px 10px;
-	-webkit-transition: all 0.4s;	
-}
-#changeEffect {
-	-webkit-transition: all 0.4s;
-	font-size: 1px;
-	opacity: 0;
-}
-#changeEffect.show {
-	opacity: 1;
-	font-size: 14px;
-}
-button:active {
-  background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
-}
-</style>
-<script src="options.js"></script>
+		body.loaded #page {
+			-webkit-transform: translate3d(0, 0, 0) perspective(800);
+		}
+
+		select::-webkit-scrollbar {
+			width: 5px;
+			height: 5px;
+		}
+
+		select::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+			background-color: #eee;
+		}
+
+		select::-webkit-scrollbar-thumb {
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+			-webkit-transition: all 0.2s;
+			background-color: #666;
+		}
+
+		body {
+			font-family: 'Segoe UI', Tahoma, sans-serif;
+			color: #333;
+			background-color: #fefefe;
+			opacity: 0;
+			-webkit-transition: all 1.5s;
+		}
+
+		h1 {
+			background-color: #20509F;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			padding: 10px;
+			padding-left: 70px;
+			color: #fff;
+		}
+
+		h1,
+		h2 {
+			font-size: 30px;
+			margin: 0;
+			font-weight: normal;
+			letter-spacing: -1px;
+		}
+
+		h2 {
+			font-size: 20px;
+			margin-bottom: 10px;
+			color: #555;
+			margin-top: 30px;
+		}
+
+		#options {
+			margin-top: 30px;
+			font-size: 14px;
+		}
+
+		#links a#footer {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			border-top: 1px solid #BBB;
+			padding: 20px 30px;
+			font-size: 13px;
+			color: #222;
+			text-decoration: none;
+			border-bottom: 0;
+		}
+
+		#links a#footer:hover {
+			background-color: #eee;
+		}
+
+		#links a#footer span {
+			background-image: url(https://xontab.com/res/images/logo/header.png);
+			background-repeat: no-repeat;
+			background-size: 50px;
+			height: 50px;
+			padding-left: 60px;
+			font-size: 23px;
+			margin-top: 12px;
+			padding-top: 8px;
+			text-decoration: none;
+			color: #20509F;
+			letter-spacing: -1px;
+			margin-left: 10px;
+			display: inline-block;
+		}
+
+		select,
+		input[type='checkbox'],
+		input[type='radio'] {
+			-webkit-appearance: none;
+			-webkit-user-select: none;
+			background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+			border: 1px solid rgba(0, 0, 0, 0.25);
+			border-radius: 2px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+			color: #444;
+			font: inherit;
+			margin: 0 1px 0 0;
+			text-shadow: 0 1px 0 rgb(240, 240, 240);
+		}
+
+		select,
+		select:hover,
+		select:focus {
+			background: #fff;
+			box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
+			background-image: none !important;
+		}
+
+		:enabled:hover:-webkit-any( select, input[type='checkbox'], input[type='radio'], :-webkit-any( button, input[type='button'], input[type='submit']):not(.custom-appearance):not(.link-button)) {
+			background-image: -webkit-linear-gradient(#f0f0f0, #f0f0f0 38%, #e0e0e0);
+			border-color: rgba(0, 0, 0, 0.3);
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+			color: black;
+		}
+
+		input[type='checkbox']:checked::before {
+			-webkit-user-select: none;
+			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAcklEQVQY02NgwA/YoJgoEA/Es4DYgJBCJSBeD8SboRinBiYg7kZS2IosyQ/Eakh8LySFq4FYHFlxGRBvBOJYqMRqJMU+yApNkSRAeC0Sux3dfSCTetE0wKyXxOWhMKhTYIr9CAUXyJMzgLgBagBBgDPGAI2LGdNt0T1AAAAAAElFTkSuQmCC');
+			background-size: 100% 100%;
+			content: '';
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
+
+		input[type='checkbox'] {
+			bottom: 2px;
+			height: 13px;
+			position: relative;
+			vertical-align: middle;
+			width: 13px;
+		}
+
+		select {
+			border: 1px solid #999;
+			border-radius: 3px;
+		}
+
+		select,
+		input,
+		button {
+			-webkit-transition: all 0.3s;
+			outline: none;
+		}
+
+		select:focus,
+		input:focus,
+		button:active {
+			border: 1px solid #15C !important;
+		}
+
+		#links {
+			position: absolute;
+			top: 35px;
+			bottom: 0;
+			right: 0;
+			z-index: 1;
+			padding-right: 220px;
+			box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.1);
+			padding-left: 25px;
+		}
+
+		#links iframe {
+			position: absolute;
+			right: 0;
+			top: 50px;
+			border: 0;
+		}
+
+		#links a {
+			display: inline-block;
+			text-decoration: none;
+			-webkit-transition: all 0.4s;
+			color: #888;
+			border-bottom: 1px solid #fff;
+			padding: 2px 5px;
+			margin: 5px 0;
+			font-size: 13px;
+		}
+
+		#links a:hover {
+			border-bottom: 1px solid #333;
+			color: #333;
+		}
+
+		select {
+			padding: 5px;
+		}
+
+		select.layout {
+			height: 200px;
+			width: 150px;
+		}
+
+		label {
+			padding: 7px 0;
+			display: block;
+		}
+
+		th {
+			font-size: 15px;
+			text-align: left;
+			font-weight: normal;
+			padding-top: 20px;
+		}
+
+		button {
+			-webkit-appearance: none;
+			-webkit-user-select: none;
+			background-image: -webkit-linear-gradient(#EDEDED, #EDEDED 38%, #DEDEDE);
+			border: 1px solid rgba(0, 0, 0, 0.25);
+			border-radius: 2px;
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+			color: #000;
+			font: inherit;
+			margin: 5px 10px;
+			text-shadow: 0 1px 0 #F0F0F0;
+			padding: 5px 10px;
+			-webkit-transition: all 0.4s;
+		}
+
+		#changeEffect {
+			-webkit-transition: all 0.4s;
+			font-size: 1px;
+			opacity: 0;
+		}
+
+		#changeEffect.show {
+			opacity: 1;
+			font-size: 14px;
+		}
+
+		button:active {
+			background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+		}
+	</style>
+	<script src="options.js"></script>
 </head>
 <body>
-<div id="page">
-	<div id="navigation">
-		<h1>Virtual Keyboard Settings</h1>
-		<div id="changeEffect">Settings have been saved. Note: Your changes will take effect when you reload page</div>
-	</div>
-	<div id="options">
-		<h2>Keyboard Layout</h2>
-		<table cellpadding="0" cellspacing="0">
-			<tr>
-				<th>Available Layouts:</th>
-				<th></th>
-				<th>Chosen Layouts:</th>
-			</tr>
-			<tr>
-				<td>
-					<select id="al" multiple="multiple" class="layout" width="100" height="200">
-						<option value="en">English (QWERTY)</option>
-						<option value="fr">French (AZERTY)</option>
-						<option value="de">German (QWERTZ)</option>
-						<option value="kr">Korean</option>
-						<option value="hu">Magyar (QWERTY)</option>
-						<option value="no">Norwegian (QWERTY)</option>
-						<option value="pl">Polish (QWERTY)</option>
-						<option value="ru">Russian (JCUKEN)</option>
-						<option value="sl">Slovenian (QWERTZ)</option>
-						<option value="es">Spanish (QWERTY)</option>
-						<option value="sw">Swedish (QWERTY)</option>
-						<option value="ta">Tamil 99</option>
-					</select>
-				</td>
-				<td>
-					<button id="kl_add">&gt;</button><br />
-					<button id="kl_remove">&lt;</button>
-				</td>
-				<td>
-					<select id="sl" multiple="multiple" class="layout" width="100" height="200">
-						<option value="en">English (QWERTY)</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-		<br />	
-		<h2>Behaviour</h2>
-		<label><input type="checkbox" id="capsLock" _setting="capsLock" class="setting" value="true" _default="true" /> Enable Caps Lock</label>
-		<label><input type="checkbox" id="intelligentScroll" _setting="intelligentScroll" class="setting" value="true" _default="true" /> Enable Intelligent Auto-Scrolling (Scrolls the page automatically when a text field is in focus)</label>
-		<label><input type="checkbox" id="repeatLetters" _setting="repeatLetters" class="setting" value="true" _default="false" /> Enable Auto letter/character Repetition </label>
-		<label><input type="checkbox" id="touchEvents" _setting="touchEvents" class="setting" value="true" _changed="checkbox_touchEvents" /> Use Touch events instead of Mouse events</label>
-		<div id="autoTriggerPH">
-			<label><input type="checkbox" id="autoTrigger" _setting="autoTrigger" class="setting" value="true" _changed="checkbox_autoTrigger" /> Enable Auto Clicking via Mouse Hover</label>
-			<div id="autoTriggerOnPH">
-				<label id="autoTriggerAfterLabel"><span style="vertical-align: top;">Trigger auto clicking after: </span> <input type="range" min="0.1" max="30" step="0.1" style="width: 260px" id="autoTriggerAfter" _setting="autoTriggerAfter" class="setting" value="1.0" _default="1.0	" _changed="slider_autoTriggerAfter" /> <span style="vertical-align: top;" id="autoTriggerAfterValue"></span></label>
-				<label><input type="checkbox" id="autoTriggerLinks" _setting="autoTriggerLinks" class="setting" value="true"/> Enable Auto Clicking via Mouse Hover on Anchor tags (Links)</label>
-			</div>
+	<h1>Virtual Keyboard Settings</h1>
+	<div id="page">
+		<div id="navigation">
+			<div id="changeEffect">Settings have been saved. Note: Your changes will take effect when you reload page</div>
 		</div>
-		<h2>User Interface (UI)</h2>
-		<label><input type="checkbox" id="hardwareAcceleration" _setting="hardwareAcceleration" class="setting" value="true" _default="true" /> Enable Hardware Acceleration</label>
-		<label><input type="checkbox" id="toogleKeyboard" _setting="toogleKeyboard" class="setting" value="true" _default="true" /> Enable Toggle Keyboard page action (Keyboard icon in URL bar)</label>
-		<label><input type="checkbox" id="urlButton" _setting="urlButton" class="setting" value="true" /> Enable URL Button (Allows you to type a new website address using this keyboard)</label>
-		<label><input type="checkbox" id="smallKeyboard" _setting="smallKeyboard" class="setting" value="true" _changed="checkbox_smallKeyboard" /> Enable Small Keyboard Layout (Can also be moved!)</label>
-		<label id="zoomLevelLabel"><span style="vertical-align: top;">Zoom level: </span> <input type="range" min="0" max="1.8" step="0.05" id="zoomLevel" _setting="zoomLevel" style="width: 260px" class="setting" value="0" _default="0" _changed="slider_zoom" /> <span style="vertical-align: top;" id="zoomLevelValue"></span></label>
+		<div id="options">
+			<h2>Keyboard Layout</h2>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<th>Available Layouts:</th>
+					<th></th>
+					<th>Chosen Layouts:</th>
+				</tr>
+				<tr>
+					<td>
+						<select id="al" multiple="multiple" class="layout" width="100" height="200">
+							<option value="en">English (QWERTY)</option>
+							<option value="fr">French (AZERTY)</option>
+							<option value="de">German (QWERTZ)</option>
+							<option value="kr">Korean</option>
+							<option value="hu">Magyar (QWERTY)</option>
+							<option value="no">Norwegian (QWERTY)</option>
+							<option value="pl">Polish (QWERTY)</option>
+							<option value="ru">Russian (JCUKEN)</option>
+							<option value="sl">Slovenian (QWERTZ)</option>
+							<option value="es">Spanish (QWERTY)</option>
+							<option value="sw">Swedish (QWERTY)</option>
+							<option value="ta">Tamil 99</option>
+						</select>
+					</td>
+					<td>
+						<button id="kl_add">&gt;</button>
+						<br />
+						<button id="kl_remove">&lt;</button>
+					</td>
+					<td>
+						<select id="sl" multiple="multiple" class="layout" width="100" height="200">
+							<option value="en">English (QWERTY)</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<br />
+			<h2>Behaviour</h2>
+			<label>
+				<input type="checkbox" id="capsLock" _setting="capsLock" class="setting" value="true" _default="true" /> Enable Caps Lock</label>
+			<label>
+				<input type="checkbox" id="intelligentScroll" _setting="intelligentScroll" class="setting" value="true" _default="true"
+				/> Enable Intelligent Auto-Scrolling (Scrolls the page automatically when a text field is in focus)</label>
+			<label>
+				<input type="checkbox" id="repeatLetters" _setting="repeatLetters" class="setting" value="true" _default="false" /> Enable Auto letter/character Repetition </label>
+			<label>
+				<input type="checkbox" id="touchEvents" _setting="touchEvents" class="setting" value="true" _changed="checkbox_touchEvents"
+				/> Use Touch events instead of Mouse events</label>
+			<div id="autoTriggerPH">
+				<label>
+					<input type="checkbox" id="autoTrigger" _setting="autoTrigger" class="setting" value="true" _changed="checkbox_autoTrigger"
+					/> Enable Auto Clicking via Mouse Hover</label>
+				<div id="autoTriggerOnPH">
+					<label id="autoTriggerAfterLabel">
+						<span style="vertical-align: top;">Trigger auto clicking after: </span>
+						<input type="range" min="0.1" max="30" step="0.1" style="width: 260px" id="autoTriggerAfter"
+						 _setting="autoTriggerAfter" class="setting" value="1.0" _default="1.0	" _changed="slider_autoTriggerAfter" />
+						<span style="vertical-align: top;" id="autoTriggerAfterValue"></span>
+					</label>
+					<label>
+						<input type="checkbox" id="autoTriggerLinks" _setting="autoTriggerLinks" class="setting" value="true" /> Enable Auto Clicking via Mouse Hover on Anchor tags (Links)</label>
+				</div>
+			</div>
+			<h2>User Interface (UI)</h2>
+			<label>
+				<input type="checkbox" id="hardwareAcceleration" _setting="hardwareAcceleration" class="setting" value="true" _default="true"
+				/> Enable Hardware Acceleration</label>
+			<label>
+				<input type="checkbox" id="toogleKeyboard" _setting="toogleKeyboard" class="setting" value="true" _default="true" /> Enable Toggle Keyboard page action (Keyboard icon in URL bar)</label>
+			<label>
+				<input type="checkbox" id="urlButton" _setting="urlButton" class="setting" value="true" /> Enable URL Button (Allows you to type a new website address using this keyboard)</label>
+			<label>
+				<input type="checkbox" id="smallKeyboard" _setting="smallKeyboard" class="setting" value="true" _changed="checkbox_smallKeyboard"
+				/> Enable Small Keyboard Layout (Can also be moved!)</label>
+			<label id="zoomLevelLabel">
+				<span style="vertical-align: top;">Zoom level: </span>
+				<input type="range" min="0" max="1.8" step="0.05" id="zoomLevel" _setting="zoomLevel" style="width: 260px"
+				 class="setting" value="0" _default="0" _changed="slider_zoom" />
+				<span style="vertical-align: top;" id="zoomLevelValue"></span>
+			</label>
+		</div>
+		<div id="links">
+			<h2 style="margin-top: 60px;">Links</h2>
+			<a target="_blank" href="http://www.xontab.com/Apps/Suggest/1?from=VKO">Suggest a Feature</a>
+			<br />
+			<a target="_blank" href="http://www.xontab.com/Apps?from=VKO">FREE Extensions &amp; Applications</a>
+			<br />
+			<a target="_blank" href="http://www.xontab.com?from=VKO">Developer's Website</a>
+			<br />
+			<h2 style="margin-top: 40px">Credits</h2>
+			<a target="_blank" href="#">Stuart Wright</a>
+			<a id="footer" target="_blank" href="http://www.xontab.com?from=VKO">
+				Developed by:
+				<span>Shaun Tabone</span> 
+			</a>
+			<iframe src="http://xontab.com/advert.html" width="210" height="650" />
+		</div>
 	</div>
-</div>
-<div id="links">
-	<h2 style="margin-top: 60px;">Links</h2>
-	<a target="_blank" href="http://www.xontab.com/Apps/Suggest/1?from=VKO">Suggest a Feature</a><br />
-	<a target="_blank" href="http://www.xontab.com/Apps?from=VKO">FREE Extensions &amp; Applications</a><br />
-	<a target="_blank" href="http://www.xontab.com?from=VKO">Developer's Website</a><br />
-	<h2 style="margin-top: 40px">Credits</h2>
-	<a target="_blank" href="#">Stuart Wright</a><br />
-</div>
-<div id="footer">
-	Developed by <a target="_blank" href="http://www.xontab.com?from=VKO">Shaun Tabone</a> in 2011-2013
-</div>
 </body>
+
 </html>

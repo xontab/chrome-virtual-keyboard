@@ -1,13 +1,13 @@
 function kl_add() {
 	var o = document.getElementById("al").options;
-	for (var i=0; i<o.length; i++) {
+	for (var i = 0; i < o.length; i++) {
 		if (o[i].selected) {
 			var opt = document.createElement("option");
-		    opt.text = o[i].innerHTML;
+			opt.text = o[i].innerHTML;
 			opt.value = o[i].value;
 			var os = document.getElementById("sl").options;
 			var exists = false;
-			for (var i2=0; i2<os.length; i2++) {
+			for (var i2 = 0; i2 < os.length; i2++) {
 				if (os[i2].value == o[i].value) {
 					exists = true;
 				}
@@ -19,10 +19,11 @@ function kl_add() {
 	}
 	kl_save();
 }
+
 function kl_save() {
 	var a = new Array();
 	var o = document.getElementById("sl").options;
-	for (var i=0; i<o.length; i++) {
+	for (var i = 0; i < o.length; i++) {
 		if (o[i].value != undefined) {
 			a.push({ value: o[i].value, name: o[i].innerHTML });
 		}
@@ -31,12 +32,13 @@ function kl_save() {
 	localStorage["keyboardLayout1"] = a[0].value;
 	document.getElementById("changeEffect").className = "show";
 }
+
 function kl_load() {
 	if (localStorage["keyboardLayoutsList"] != undefined) {
 		var a = JSON.parse(localStorage["keyboardLayoutsList"]);
 		if (a.length > 0) {
 			document.getElementById("sl").removeChild(document.getElementById("sl").options[0]);
-			for (var i=0; i<a.length; i++) {
+			for (var i = 0; i < a.length; i++) {
 				var opt = document.createElement("option");
 				opt.text = a[i].name;
 				opt.value = a[i].value;
@@ -51,7 +53,7 @@ function kl_load() {
 function kl_remove() {
 	var o = document.getElementById("sl").options;
 	if (o.length > 1) {
-		for (var i=0; i<o.length; i++) {
+		for (var i = 0; i < o.length; i++) {
 			if (o[i].selected) {
 				document.getElementById("sl").removeChild(o[i]);
 			}
@@ -59,14 +61,15 @@ function kl_remove() {
 	}
 	kl_save();
 }
-window.addEventListener('load', function() {
+
+window.addEventListener('load', function () {
 	document.body.className = "loaded";
 	kl_load();
 	document.getElementById("kl_remove").addEventListener("click", kl_remove, false);
 	document.getElementById("kl_add").addEventListener("click", kl_add, false);
 	var c = document.getElementsByClassName("setting");
-	for (var i=0; i<c.length; i++) {
-		var sk = c[i].getAttribute("_setting");	
+	for (var i = 0; i < c.length; i++) {
+		var sk = c[i].getAttribute("_setting");
 		if (c[i].getAttribute("type") == "checkbox") {
 			if ((localStorage[sk] == undefined) && (c[i].getAttribute("_default") != undefined)) {
 				localStorage[sk] = c[i].getAttribute("_default");
@@ -76,15 +79,15 @@ window.addEventListener('load', function() {
 			}
 		} if (c[i].getAttribute("type") == "range") {
 			if (localStorage[sk] == undefined) {
-				c[i].value = 0;	
+				c[i].value = 0;
 			} else {
-				c[i].value = localStorage[sk];	
+				c[i].value = localStorage[sk];
 			}
 		} else {
-			c[i].value = localStorage[sk];	
+			c[i].value = localStorage[sk];
 		}
-		c[i].onchange = function() {
-			var skey = this.getAttribute("_setting");	
+		c[i].onchange = function () {
+			var skey = this.getAttribute("_setting");
 			if (this.getAttribute("type") == "checkbox") {
 				if ((localStorage[skey] == undefined) && (this.getAttribute("_default") != undefined)) {
 					localStorage[skey] = this.getAttribute("_default");
@@ -110,7 +113,7 @@ function callFunc(callback) {
 
 function slider_zoom() {
 	var v = document.getElementById("zoomLevel").value;
-	if (v < 0.3) { v = "Auto"; } else { v = (v*100).toFixed(0)+"%"; }
+	if (v < 0.3) { v = "Auto"; } else { v = (v * 100).toFixed(0) + "%"; }
 	document.getElementById("zoomLevelValue").innerHTML = v;
 }
 
@@ -125,7 +128,7 @@ function checkbox_touchEvents() {
 }
 
 function slider_autoTriggerAfter() {
-	var v = document.getElementById("autoTriggerAfter").value+" sec";
+	var v = document.getElementById("autoTriggerAfter").value + " sec";
 	document.getElementById("autoTriggerAfterValue").innerHTML = v;
 }
 
