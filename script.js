@@ -434,8 +434,11 @@ function virtualKeyboardChromeExtension_open(posY, posX, force) {
 		}
 		chrome.extension.sendRequest({ method: "openFromIframe", posY: posY, posX: posX, force: force, frame: this.frameElement.id, elem: virtualKeyboardChromeExtensionClickedElem.id });
 	} else {
-		document.body.removeChild(virtualKeyboardChromeExtensionKeyboardElement);
-		document.body.appendChild(virtualKeyboardChromeExtensionKeyboardElement);
+		if(document.webkitFullscreenElement){
+			document.webkitFullscreenElement.appendChild(virtualKeyboardChromeExtensionKeyboardElement);
+		} else {
+			document.body.appendChild(virtualKeyboardChromeExtensionKeyboardElement);
+		}
 		if ((virtualKeyboardChromeExtensionKeyboardEnabled == "demand") && (force == undefined) && (virtualKeyboardChromeExtensionClickedElem.id != "virtualKeyboardChromeExtensionUrlBarTextBox")) {
 			virtualKeyboardChromeExtensionClickedElemDemand = virtualKeyboardChromeExtensionClickedElem;
 			if (posX == undefined) { posX = virtualKeyboardChromeExtension_getElementPositionX(virtualKeyboardChromeExtensionClickedElem); }
