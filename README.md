@@ -6,9 +6,9 @@ Virtual Keyboard for Google Chrome&trade; will popup automatically when the user
 
 This extension is ideal for touch screen devices. This keyboard works like an iOS/Android/Windows 8 touch virtual keyboard.
 
-<img src="http://xontab.azurewebsites.net/Content/VirtualKeyboard/1.png" alt="" />
+<img src="http://apps.xontab.com/content/VirtualKeyboard/1.png" alt="" />
 
-For more details visit: http://xontab.com/Apps/VirtualKeyboard/
+For more details visit: http://apps.xontab.com/VirtualKeyboard/
 
 ## Future versions
 
