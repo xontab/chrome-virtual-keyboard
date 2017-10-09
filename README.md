@@ -10,11 +10,15 @@ This extension is ideal for touch screen devices. This keyboard works like an iO
 
 For more details visit: http://apps.xontab.com/VirtualKeyboard/
 
+## Known Limitations
+Due to security reasons, communication between frames is restricted in Google Chrome.  The only way to enable the keyboard in cross-origin iFrame scenarios, you need to disable web security using a flag.  For more details visit: https://stackoverflow.com/questions/36016952/chrome-49-plus-disable-web-security
+
 ## Future versions
 
 Planned features are:
 * Better support with WebComponents, Angular 1, 2+ and React
 * Add support to HTML ContentEditable
+* More Keyboard layouts
 * More developer options
 * Refactoring and Documenation
 
