@@ -298,6 +298,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						virtualKeyboardChromeExtensionDraggabling = false;
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(virtualKeyboardChromeExtension_fireEvent("keypress", 0, key.charCodeAt(0)));
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(virtualKeyboardChromeExtension_fireEvent("keyup", 0, key.charCodeAt(0)));
+						virtualKeyboardChromeExtension_dispatch_event();
 					}
 				}
 				break;
