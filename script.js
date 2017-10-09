@@ -528,9 +528,10 @@ function vt_evt_textarea_click() {
 	return vk_evt_input_event(this, false, "textarea");
 }
 
-function vk_evt_input_mousedown() {
-	virtualKeyboardChromeExtensionClickedYPos = window.event.clientY;
-	virtualKeyboardChromeExtensionClickedXPos = window.event.clientX;
+function vk_evt_input_mousedown(ent) {
+	const evt = virtualKeyboardChromeExtensionTouchEvents == "true" ? ent.touches[0] : window.event;
+	virtualKeyboardChromeExtensionClickedYPos = evt.clientY;
+	virtualKeyboardChromeExtensionClickedXPos = evt.clientX;
 }
 
 function vt_evt_autoTrigger_mover_timeout(elem) {
@@ -585,22 +586,15 @@ function virtualKeyboardChromeClassStyleDisplay(className, value) {
 
 function virtualKeyboardChrome_bind_input(e, autoTrigger, focusCallback, clickCallback) {
 	if (e.getAttribute("_vkEnabled") == undefined) {
-		e.setAttribute("_vkEnabled", "true");
 		e.addEventListener("blur", vk_evt_input_blur, false);
-		if (virtualKeyboardChromeExtensionTouchEvents == "true") {
-			e.addEventListener("touchstart", function (ent) {
-				virtualKeyboardChromeExtensionClickedYPos = ent.touches[0].clientY;
-				virtualKeyboardChromeExtensionClickedXPos = ent.touches[0].clientX;
-			}, false);
-		} else {
-			e.addEventListener("mousedown", vk_evt_input_mousedown, false);
-		}
+		e.addEventListener(virtualKeyboardChromeExtensionTouchEvents == "true" ? "touchstart" : "mousedown", vk_evt_input_mousedown, false);
 		e.addEventListener("focus", focusCallback, false);
 		e.addEventListener("click", clickCallback, false);
 		if (autoTrigger) {
 			e.addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
 			e.addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
 		}
+		e.setAttribute("_vkEnabled", "true");
 	}
 }
 
