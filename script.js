@@ -329,6 +329,10 @@ function setting_set(key, value) {
 	chrome.extension.sendRequest({ method: "setLocalStorage", key: key, value: value }, function (response) { });
 }
 
+function openUrl(url) {
+	chrome.extension.sendRequest({ method: "createTab", url: url }, function (response) { });
+}
+
 function virtualKeyboardChromeExtension_getElementPosition(obj, type) {
 	var cur = 0;
 	if (obj && obj.offsetParent) {
@@ -601,7 +605,7 @@ function virtualKeyboardChrome_bind_input(e, autoTrigger, focusCallback, clickCa
 
 function xk_settings_load_main(response) {
 	if (response.openedFirstTime == undefined) {
-		window.open(chrome.extension.getURL("options.html"));
+		openUrl(chrome.extension.getURL("options.html"));
 		setting_set("openedFirstTime", "true");
 	}
 	document.getElementById('virtualKeyboardChromeExtension').className = response.smallKeyboard == "true" ? "modeS" : "";
