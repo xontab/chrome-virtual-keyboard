@@ -94,7 +94,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			chrome.tabs.sendRequest(tab.id, "openUrlBar");
 			sendResponse({data: "ok" });
 		});
-	} 
+	} else if (request.method == "createTab") {
+		chrome.tabs.create({ url: request.url });
+	}
     else {
       sendResponse({});
 	}

@@ -24,7 +24,7 @@
     "keyboard_en.html",
     "keyboard_ru.html",
     "style.css",
-    "options.js",
+    "options/*",
     "toggle.html",
     "toggle.js",
     "icons/*",

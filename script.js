@@ -704,7 +704,7 @@ var virtualKeyboardChromeExtensionRequestRefresh = false;
 
 function xk_settings_load_main(response) {
 	if (response.openedFirstTime == undefined) {
-		window.open(chrome.extension.getURL("options.html"));
+		chrome.extension.sendRequest({ method: "createTab", url: chrome.extension.getURL("options.html") });		
 		setting_set("openedFirstTime", "true");
 	}
 	if (response.smallKeyboard == "true") {
