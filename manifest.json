@@ -27,7 +27,7 @@
     "keyboard.html",
     "layouts/keyboard_*.html",
     "style.css",
-    "options.js",
+    "options/*",
     "toggle.html",
     "toggle.js",
     "icons/*",
