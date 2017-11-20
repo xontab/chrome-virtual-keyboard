@@ -26,6 +26,7 @@ var autoTriggerLinks = false;
 var autoTriggerAfter = 1;
 var lastHovered = null;
 var lastHoveredTO = null;
+var refreshTime = 1000;
 
 function virtualKeyboardChromeExtension_generate_onchange()
     {
@@ -338,7 +339,6 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
 						
 						keyboardEvent = document.createEvent("KeyboardEvent");
-						initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
 						keyboardEvent[initMethod](
 										   "keyup", // event type : keydown, keyup, keypress
 											true, // bubbles
@@ -351,6 +351,9 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 											0, // keyCodeArg : unsigned long the virtual key code, else 0
 											key.charCodeAt(0) // charCodeArgs : unsigned long the Unicode character associated with the depressed key, else 0
 						);
+						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
+						
+						keyboardEvent = new InputEvent("input", {inputType: "insertText"});
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
 					}
 				}
@@ -736,7 +739,26 @@ function xk_settings_load_main(response) {
 	if (virtualKeyboardChromeExtensionUrlButton == undefined) { virtualKeyboardChromeExtensionUrlButton = "false"; }
 	init_virtualKeyboardChromeExtension(true);
 }
-					
+	
+function* getAllChildNodes(element, includeShadowDom) {
+    if (element.children) {
+        for (let node of element.children) {
+            yield node;
+            if (includeShadowDom && node.shadowRoot != null) {
+                yield node.shadowRoot;
+                let childs = getAllChildNodes(node.shadowRoot, includeShadowDom);
+                for (let cnode of childs) {
+                    yield cnode;
+                }
+            }
+            let childs = getAllChildNodes(node, includeShadowDom);
+            for (let cnode of childs) {
+                yield cnode;
+            }
+        }
+    }
+}
+	
 function init_virtualKeyboardChromeExtension(firstTime) {
 	if (firstTime) {
 		if (top == self) {
@@ -849,31 +871,57 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 		}
 	}
 	if (virtualKeyboardChromeExtensionTouchEvents != undefined) {
-		var e = document.getElementsByTagName("input");
-		for (var i=0; i<e.length; i++) {
-			if ((e[i].type == "text") || (e[i].type == "password") || (e[i].type == "search") || (e[i].type == "email") || (e[i].type == "number") || (e[i].type == "tel") || (e[i].type == "url")) {
-				if (e[i].getAttribute("_vkEnabled") == undefined) {
-					e[i].setAttribute("_vkEnabled", "true");
-					e[i].addEventListener("blur", vk_evt_input_blur, false);
+		var nodes = getAllChildNodes(document, true)
+		for (let e of nodes) {
+			if (e.nodeName == "INPUT") {
+				if ((e.type == "text") || (e.type == "password") || (e.type == "search") || (e.type == "email") || (e.type == "number") || (e.type == "tel") || (e.type == "url")) {
+					if (e.getAttribute("_vkEnabled") == undefined) {
+						e.setAttribute("_vkEnabled", "true");
+						e.addEventListener("blur", vk_evt_input_blur, false);
+						if (virtualKeyboardChromeExtensionTouchEvents == "true") {
+							e.addEventListener("touchstart", function(ent) { 
+								virtualKeyboardChromeExtensionClickedYPos = ent.touches[0].clientY; 
+								virtualKeyboardChromeExtensionClickedXPos = ent.touches[0].clientX; 
+							}, false);
+						} else {
+							e.addEventListener("mousedown", vk_evt_input_mousedown, false);
+						}
+						e.addEventListener("focus", vk_evt_input_focus, false);
+						e.addEventListener("click", vk_evt_input_click, false);
+						if (autoTrigger) {
+							e.addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
+							e.addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
+						}
+
+					}
+				}
+			} else if (e.nodeName == "INPUT") {
+				if (e.getAttribute("_vkEnabled") == undefined) {
+					e.setAttribute("_vkEnabled", "true");
+					e.addEventListener("blur", function() {
+						virtualKeyboardChromeExtension_generate_onchange();
+						virtualKeyboardChromeExtensionClickedElem = undefined;
+						virtualKeyboardChromeExtensionCloseTimer = setTimeout(function() {
+							virtualKeyboardChromeExtension_click('Close');
+						}, 1000);
+					}, false);
 					if (virtualKeyboardChromeExtensionTouchEvents == "true") {
-						e[i].addEventListener("touchstart", function(ent) { 
+						e.addEventListener("touchstart", function(ent) { 
 							virtualKeyboardChromeExtensionClickedYPos = ent.touches[0].clientY; 
 							virtualKeyboardChromeExtensionClickedXPos = ent.touches[0].clientX; 
 						}, false);
 					} else {
-						e[i].addEventListener("mousedown", vk_evt_input_mousedown, false);
+						e.addEventListener("mousedown", vk_evt_textarea_mousedown, false);
 					}
-					e[i].addEventListener("focus", vk_evt_input_focus, false);
-					e[i].addEventListener("click", vk_evt_input_click, false);
+					e.addEventListener("focus", vt_evt_textarea_focus, false);
+					e.addEventListener("click", vt_evt_textarea_click, false);
 					if (autoTrigger) {
-						e[i].addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
-						e[i].addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
+						e.addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
+						e.addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
 					}
-
 				}
 			}
 		}
-		delete e;
 		
 		if (autoTriggerLinks) {
 			var e = document.getElementsByTagName("a");
@@ -886,34 +934,6 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 			}
 		}
 		
-		var e = document.getElementsByTagName("textarea");
-		for (var i=0; i<e.length; i++) {
-			if (e[i].getAttribute("_vkEnabled") == undefined) {
-				e[i].setAttribute("_vkEnabled", "true");
-				e[i].addEventListener("blur", function() {
-					virtualKeyboardChromeExtension_generate_onchange();
-					virtualKeyboardChromeExtensionClickedElem = undefined;
-					virtualKeyboardChromeExtensionCloseTimer = setTimeout(function() {
-						virtualKeyboardChromeExtension_click('Close');
-					}, 1000);
-				}, false);
-				if (virtualKeyboardChromeExtensionTouchEvents == "true") {
-					e[i].addEventListener("touchstart", function(ent) { 
-						virtualKeyboardChromeExtensionClickedYPos = ent.touches[0].clientY; 
-						virtualKeyboardChromeExtensionClickedXPos = ent.touches[0].clientX; 
-					}, false);
-				} else {
-					e[i].addEventListener("mousedown", vk_evt_textarea_mousedown, false);
-				}
-				e[i].addEventListener("focus", vt_evt_textarea_focus, false);
-				e[i].addEventListener("click", vt_evt_textarea_click, false);
-				if (autoTrigger) {
-					e[i].addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
-					e[i].addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
-				}
-			}
-		}
-		delete e;
 		if (firstTime) {
 			if (top == self) {
 				var v = document.getElementById("virtualKeyboardChromeExtension");
@@ -1194,6 +1214,7 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 		}
 	}
 	
+	setTimeout(init_virtualKeyboardChromeExtension_false_iframe, refreshTime);
 }
 
 function vk_document_mouseup(ent) {
@@ -1359,6 +1380,10 @@ function vk_ajax_load_main() {
 			virtualKeyboardChromeExtensionRepeatLetters = true;
 		}
 		
+		// refreshTime
+		if (response.refreshTime == undefined) { response.refreshTime = 1000; }
+			refreshTime = response.refreshTime;
+				
 		// zoomLevel
 		if (response.zoomLevel == undefined) { response.zoomLevel = 0; }
 		if (parseFloat(response.zoomLevel) >= 0.3) {
