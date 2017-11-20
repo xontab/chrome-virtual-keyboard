@@ -301,8 +301,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(virtualKeyboardChromeExtension_fireEvent("keyup", 0, key.charCodeAt(0)));
 						virtualKeyboardChromeExtension_dispatch_event();
 
-                        //keyboardEvent = new InputEvent("input", {inputType: "insertText"});
-						//virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
+						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(new InputEvent("input", {inputType: "insertText"}));
 					}
 				}
 				break;
