@@ -36,6 +36,7 @@ var lastHovered = null;
 var lastHoveredTO = null;
 var iframeElemSent = 0;
 var refreshTime = 1000;
+var dialogs =[];
 
 function virtualKeyboardChromeExtension_dispatch_event(eventType = "input") {
 	var keyboardEvent = document.createEvent("Event");
@@ -163,6 +164,14 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 				document.getElementById('virtualKeyboardChromeExtensionMainNumbers').style.display = virtualKeyboardChromeExtensionFormat ? "" : "none";
 				break;
 			case 'Close':
+				for( let dlg of dialogs ){
+				if (dlg.oldNoCancelOnOutsideClick)
+					dlg.setAttribute("no-cancel-on-outside-click", dlg.oldNoCancelOnOutsideClick );
+				else
+					dlg.removeAttribute("no-cancel-on-outside-click");
+				}
+				dialogs = [];
+				
 				if (virtualKeyboardChromeExtensionState) {
 					virtualKeyboardChromeExtensionState = false;
 					if (virtualKeyboardChromeExtensionFullScreenState) {
@@ -495,12 +504,40 @@ function vk_evt_input_blur() {
 	virtualKeyboardChromeExtensionClickedElem = undefined;
 	virtualKeyboardChromeExtensionCloseTimer = setTimeout(function () {
 		virtualKeyboardChromeExtension_click('Close');
-	}, 1000);
+	}, 500);
 }
 
+
+
+function vk_disable_pdclose(element) {
+	let el = element;
+	while (el != null) {
+		if (el.parentElement)
+			el = el.parentElement;
+		else if (el.parentNode)
+			el = el.parentNode;
+		else
+			el = el.host;
+	
+		if (el && el.nodeName == "PAPER-DIALOG"){
+			if (dialogs.indexOf(el)<0) {
+				let old = el.getAttribute("no-cancel-on-outside-click");
+				el.oldNoCancelOnOutsideClick = old;
+
+				el.setAttribute("no-cancel-on-outside-click", "");
+				dialogs.push(el);
+			}
+
+
+		}
+	}
+}
 function vk_evt_input_event(element, isFocus = false, elementType = "input") {
 	if ((element.disabled == true) || (element.readOnly == true)) {
 		return;
+	}
+	if (isFocus){
+		vk_disable_pdclose(element);
 	}
 	clearTimeout(virtualKeyboardChromeExtensionCloseTimer);
 	virtualKeyboardChromeExtensionElemType = elementType;
@@ -730,7 +767,8 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 				document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").onmouseup = virtualKeyboardChrome_prevent;
 
 				if (autoTrigger) {
-					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
+					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover, 
+false);
 					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
 				}
 			}
