@@ -24,7 +24,8 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 			repeatLetters: localStorage["repeatLetters"],
 			intelligentScroll: localStorage["intelligentScroll"],
 			autoTriggerLinks: localStorage["autoTriggerLinks"],
-			autoTriggerAfter: localStorage["autoTriggerAfter"]
+			autoTriggerAfter: localStorage["autoTriggerAfter"],
+         	refreshTime: localStorage["refreshTime"]
 		});
 	}
 	else if (request.method == "setLocalStorage") {

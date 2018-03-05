@@ -35,6 +35,8 @@ var autoTriggerAfter = 1;
 var lastHovered = null;
 var lastHoveredTO = null;
 var iframeElemSent = 0;
+var refreshTime = 1000;
+var dialogs =[];
 
 function virtualKeyboardChromeExtension_dispatch_event(eventType = "input") {
 	var keyboardEvent = document.createEvent("Event");
@@ -162,6 +164,14 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 				document.getElementById('virtualKeyboardChromeExtensionMainNumbers').style.display = virtualKeyboardChromeExtensionFormat ? "" : "none";
 				break;
 			case 'Close':
+				for( let dlg of dialogs ){
+				if (dlg.oldNoCancelOnOutsideClick)
+					dlg.setAttribute("no-cancel-on-outside-click", dlg.oldNoCancelOnOutsideClick );
+				else
+					dlg.removeAttribute("no-cancel-on-outside-click");
+				}
+				dialogs = [];
+				
 				if (virtualKeyboardChromeExtensionState) {
 					virtualKeyboardChromeExtensionState = false;
 					if (virtualKeyboardChromeExtensionFullScreenState) {
@@ -297,6 +307,8 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(virtualKeyboardChromeExtension_fireEvent("keypress", 0, key.charCodeAt(0)));
 						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(virtualKeyboardChromeExtension_fireEvent("keyup", 0, key.charCodeAt(0)));
 						virtualKeyboardChromeExtension_dispatch_event();
+
+						virtualKeyboardChromeExtensionClickedElem.dispatchEvent(new InputEvent("input", {inputType: "insertText"}));
 					}
 				}
 				break;
@@ -492,12 +504,40 @@ function vk_evt_input_blur() {
 	virtualKeyboardChromeExtensionClickedElem = undefined;
 	virtualKeyboardChromeExtensionCloseTimer = setTimeout(function () {
 		virtualKeyboardChromeExtension_click('Close');
-	}, 1000);
+	}, 500);
 }
 
+
+
+function vk_disable_pdclose(element) {
+	let el = element;
+	while (el != null) {
+		if (el.parentElement)
+			el = el.parentElement;
+		else if (el.parentNode)
+			el = el.parentNode;
+		else
+			el = el.host;
+	
+		if (el && el.nodeName == "PAPER-DIALOG"){
+			if (dialogs.indexOf(el)<0) {
+				let old = el.getAttribute("no-cancel-on-outside-click");
+				el.oldNoCancelOnOutsideClick = old;
+
+				el.setAttribute("no-cancel-on-outside-click", "");
+				dialogs.push(el);
+			}
+
+
+		}
+	}
+}
 function vk_evt_input_event(element, isFocus = false, elementType = "input") {
 	if ((element.disabled == true) || (element.readOnly == true)) {
 		return;
+	}
+	if (isFocus){
+		vk_disable_pdclose(element);
 	}
 	clearTimeout(virtualKeyboardChromeExtensionCloseTimer);
 	virtualKeyboardChromeExtensionElemType = elementType;
@@ -622,6 +662,25 @@ function virtualKeyboardChrome_prevent(ent) {
 	ent.stopPropagation();
 }
 
+function* getAllChildNodes(element, includeShadowDom) {
+    if (element.children) {
+        for (let node of element.children) {
+            yield node;
+            if (includeShadowDom && node.shadowRoot != null) {
+                yield node.shadowRoot;
+                let childs = getAllChildNodes(node.shadowRoot, includeShadowDom);
+                for (let cnode of childs) {
+                    yield cnode;
+                }
+            }
+            let childs = getAllChildNodes(node, includeShadowDom);
+            for (let cnode of childs) {
+                yield cnode;
+            }
+        }
+    }
+}
+
 function init_virtualKeyboardChromeExtension(firstTime) {
 	if (firstTime) {
 		if (top == self) {
@@ -708,7 +767,8 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 				document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").onmouseup = virtualKeyboardChrome_prevent;
 
 				if (autoTrigger) {
-					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover, false);
+					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover, 
+false);
 					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
 				}
 			}
@@ -723,10 +783,14 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 		}
 	}
 	if (virtualKeyboardChromeExtensionTouchEvents != undefined) {
-		var e = document.getElementsByTagName("input");
-		for (var i = 0; i < e.length; i++) {
-			if ((e[i].type == "text") || (e[i].type == "password") || (e[i].type == "search") || (e[i].type == "email") || (e[i].type == "number") || (e[i].type == "tel") || (e[i].type == "url")) {
-				virtualKeyboardChrome_bind_input(e[i], autoTrigger, vk_evt_input_focus, vk_evt_input_click);
+		var nodes = getAllChildNodes(document, true)
+		for (let e of nodes) {
+			if (e.nodeName == "INPUT") {
+				if ((e.type == "text") || (e.type == "password") || (e.type == "search") || (e.type == "email") || (e.type == "number") || (e.type == "tel") || (e.type == "url")) {
+					virtualKeyboardChrome_bind_input(e, autoTrigger, vk_evt_input_focus, vk_evt_input_click);		
+				}
+			} else if (e.nodeName == "TEXTAREA") {
+				virtualKeyboardChrome_bind_input(e, autoTrigger, vt_evt_textarea_focus, vt_evt_textarea_click);
 			}
 		}
 
@@ -740,11 +804,7 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 				}
 			}
 		}
-
-		var e = document.getElementsByTagName("textarea");
-		for (var i = 0; i < e.length; i++) {
-			virtualKeyboardChrome_bind_input(e[i], autoTrigger, vt_evt_textarea_focus, vt_evt_textarea_click);
-		}
+		
 		if (firstTime) {
 			if (top == self) {
 				var v = document.getElementById("virtualKeyboardChromeExtension");
@@ -951,7 +1011,8 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 			}
 		}
 	}
-
+	
+	setTimeout(init_virtualKeyboardChromeExtension_false_iframe, refreshTime);
 }
 
 function vk_document_mouseup(ent) {
@@ -1110,6 +1171,10 @@ function vk_ajax_load_main() {
 			if (response.autoTrigger != undefined) {
 				autoTrigger = response.autoTrigger == "true";
 			}
+
+         	// refreshTime
+		    if (response.refreshTime == undefined) { response.refreshTime = 1000; }
+			refreshTime = response.refreshTime;
 
 			// autoTriggerLinks
 			if (response.autoTriggerLinks != undefined) {
