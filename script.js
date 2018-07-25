@@ -437,6 +437,9 @@ function virtualKeyboardChromeExtension_inputTypesRender() {
 	document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display = "none";
 	document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display = "none";
 	document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display = "";
+	
+	virtualKeyboardChromeExtensionFormat = false;
+	
 	virtualKeyboardChromeClassStyleDisplay("kbEmailInput", "none");
 	if (virtualKeyboardChromeExtensionElemType != "textarea") {
 		if ((virtualKeyboardChromeExtensionClickedElem.getAttribute("_originalType") == "number")
