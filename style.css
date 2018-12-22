@@ -24,7 +24,7 @@
 	right: auto;
 	zoom: 1 !important;
 }
-#virtualKeyboardChromeExtension.modeS .virtualKeyboardChromeExtensionMainKeys, #virtualKeyboardChromeExtension.modeS #virtualKeyboardChromeExtensionNumberBarKbd1, #virtualKeyboardChromeExtension.modeS #virtualKeyboardChromeExtensionMainNumbers {
+#virtualKeyboardChromeExtension.modeS .virtualKeyboardChromeExtensionMainKeys, #virtualKeyboardChromeExtension.modeS #virtualKeyboardChromeExtensionNumberBarKbd1, #virtualKeyboardChromeExtension.modeS #virtualKeyboardChromeExtensionMainNumbers{
 	zoom: 0.7 !important;
 }
 
@@ -268,7 +268,7 @@
 {
 	margin: 5px 0 !important;
 }
-#virtualKeyboardChromeExtensionMainNumbers table td 
+#virtualKeyboardChromeExtensionMainNumbers table td, #virtualKeyboardChromeExtensionMathNumbers table td 
 {
 	padding: 30px 30px !important;
 }
@@ -278,7 +278,7 @@
 	padding: 30px 30px !important;
 	position: relative !important;
 }
-#virtualKeyboardChromeExtensionMainNumbers td span{
+#virtualKeyboardChromeExtensionMainNumbers td span, #virtualKeyboardChromeExtensionMathNumbers td span{
 	top: 3px !important;
 	bottom: 3px !important;
 }
