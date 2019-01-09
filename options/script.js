@@ -65,8 +65,6 @@ function kl_remove() {
 window.addEventListener('load', function () {
 	document.body.className = "loaded";
 	kl_load();
-	document.getElementById("kl_remove").addEventListener("click", kl_remove, false);
-	document.getElementById("kl_add").addEventListener("click", kl_add, false);
 	var c = document.getElementsByClassName("setting");
 	for (var i = 0; i < c.length; i++) {
 		var sk = c[i].getAttribute("_setting");
