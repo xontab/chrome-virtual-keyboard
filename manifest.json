@@ -2,7 +2,7 @@
   "name": "Virtual Math Keyboard",
   "description": "On-screen virtual math keyboard",
   "manifest_version": 2,
-  "version": "1.00",
+  "version": "1.00"
   "icons": { "16": "keyboard.png",
            "48": "keyboard.png",
           "128": "keyboard.png" },
