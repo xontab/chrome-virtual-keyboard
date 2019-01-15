@@ -103,6 +103,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 function vkeyboard_loadPageIcon(tabId) {
+	chrome.pageAction.setIcon({ tabId: tabId, path: "buttons/keyboard_0.png" }, function() { })
+	/*
 	if (localStorage["keyboardEnabled"] == "demand") {
 		chrome.pageAction.setIcon({ tabId: tabId, path: "buttons/keyboard_2.png" }, function() { })
 	} else if (localStorage["keyboardEnabled"] != "false") {
@@ -110,6 +112,7 @@ function vkeyboard_loadPageIcon(tabId) {
 	} else {
 		chrome.pageAction.setIcon({ tabId: tabId, path: "buttons/keyboard_3.png" }, function() { })
 	}
+	*/
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {

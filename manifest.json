@@ -11,7 +11,7 @@
   },
   "options_page": "options.html",
    "page_action": {
-    "default_icon": "buttons/keyboard_2.png",
+    "default_icon": "buttons/keyboard_0.png",
 	"default_title": "Virtual Keyboard Toggle",
     "default_popup": "toggle.html"
   },
@@ -33,10 +33,7 @@
 	"icons/enter-e.png",
 	"icons/settings.png",
 	"icons/shift.png",
-    "buttons/*",
-    "buttons/keyboard_1.png",
-    "buttons/keyboard_2.png",
-    "buttons/keyboard_3.png"
+    "buttons/*"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
