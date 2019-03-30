@@ -171,7 +171,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 					dlg.removeAttribute("no-cancel-on-outside-click");
 				}
 				dialogs = [];
-				
+
 				if (virtualKeyboardChromeExtensionState) {
 					virtualKeyboardChromeExtensionState = false;
 					if (virtualKeyboardChromeExtensionFullScreenState) {
@@ -189,7 +189,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						}
 					}, 500);
 					if (virtualKeyboardChromeExtensionFullScreenState && intelligentScroll) {
-						var scrollYAmount = document.body.scrollTop;
+						var scrollYAmount = document.documentElement.scrollTop;
 						if ((scrollYAmount <= virtualKeyboardChromeExtensionStateNewPos + 50) && (scrollYAmount >= virtualKeyboardChromeExtensionStateNewPos - 50)) {
 							document.getElementById("virtualKeyboardChromeExtensionOverlayScrollExtend").style.display = "none";
 							if (virtualKeyboardChromeExtensionPagePadding) {
@@ -239,7 +239,7 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 						document.getElementById('virtualKeyboardChromeExtension').setAttribute("_state", "closed");
 						setTimeout(function () { document.getElementById('virtualKeyboardChromeExtension').style.display = "none"; }, 500);
 						if (virtualKeyboardChromeExtensionFullScreenState && intelligentScroll) {
-							var scrollYAmount = document.body.scrollTop;
+							var scrollYAmount = document.documentElement.scrollTop;
 							if ((scrollYAmount <= virtualKeyboardChromeExtensionStateNewPos + 50) && (scrollYAmount >= virtualKeyboardChromeExtensionStateNewPos - 50)) {
 								document.getElementById("virtualKeyboardChromeExtensionOverlayScrollExtend").style.display = "none";
 								if (virtualKeyboardChromeExtensionPagePadding) {
@@ -363,11 +363,11 @@ function virtualKeyboardChromeExtension_getElementPositionX(obj) {
 }
 
 function virtualKeyboardChromeExtension_open_part2(pos) {
-	var windowScrollTop = document.body.scrollTop;
+	var windowScrollTop = document.documentElement.scrollTop;
 	if (virtualKeyboardChromeExtensionCloseTimer != null) {
 		clearTimeout(virtualKeyboardChromeExtensionCloseTimer);
 	}
-	virtualKeyboardChromeExtensionStateLastPos = document.body.scrollTop;
+	virtualKeyboardChromeExtensionStateLastPos = document.documentElement.scrollTop;
 	if (virtualKeyboardChromeExtensionFullScreenState) {
 		if (((document.body.style.marginBottom == "") && (!virtualKeyboardChromeExtensionPagePadding)) || (virtualKeyboardChromeExtensionPagePadding)) {
 			document.body.style.marginBottom = document.getElementById("virtualKeyboardChromeExtension").offsetHeight + "px";
@@ -437,9 +437,9 @@ function virtualKeyboardChromeExtension_inputTypesRender() {
 	document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display = "none";
 	document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display = "none";
 	document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display = "";
-	
+
 	virtualKeyboardChromeExtensionFormat = false;
-	
+
 	virtualKeyboardChromeClassStyleDisplay("kbEmailInput", "none");
 	if (virtualKeyboardChromeExtensionElemType != "textarea") {
 		if ((virtualKeyboardChromeExtensionClickedElem.getAttribute("_originalType") == "number")
@@ -469,8 +469,8 @@ function virtualKeyboardChromeExtension_open(posY, posX, force) {
 			virtualKeyboardChromeExtensionClickedElemDemand = virtualKeyboardChromeExtensionClickedElem;
 			if (posX == undefined) { posX = virtualKeyboardChromeExtension_getElementPositionX(virtualKeyboardChromeExtensionClickedElem); }
 			if (posY == undefined) { posY = virtualKeyboardChromeExtension_getElementPositionY(virtualKeyboardChromeExtensionClickedElem); }
-			posX = posX + document.body.scrollLeft;
-			posY = posY + document.body.scrollTop;
+			posX = posX + document.documentElement.scrollLeft;
+			posY = posY + document.documentElement.scrollTop;
 			document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").style.display = "block";
 			document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").style.top = posY + "px";
 			document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").style.left = posX + "px";
@@ -521,7 +521,7 @@ function vk_disable_pdclose(element) {
 			el = el.parentNode;
 		else
 			el = el.host;
-	
+
 		if (el && el.nodeName == "PAPER-DIALOG"){
 			if (dialogs.indexOf(el)<0) {
 				let old = el.getAttribute("no-cancel-on-outside-click");
@@ -770,7 +770,7 @@ function init_virtualKeyboardChromeExtension(firstTime) {
 				document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").onmouseup = virtualKeyboardChrome_prevent;
 
 				if (autoTrigger) {
-					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover, 
+					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseover", vt_evt_autoTrigger_mover,
 false);
 					document.getElementById("virtualKeyboardChromeExtensionOverlayDemand").addEventListener("mouseout", vt_evt_autoTrigger_mout, false);
 				}
@@ -790,7 +790,7 @@ false);
 		for (let e of nodes) {
 			if (e.nodeName == "INPUT") {
 				if ((e.type == "text") || (e.type == "password") || (e.type == "search") || (e.type == "email") || (e.type == "number") || (e.type == "tel") || (e.type == "url")) {
-					virtualKeyboardChrome_bind_input(e, autoTrigger, vk_evt_input_focus, vk_evt_input_click);		
+					virtualKeyboardChrome_bind_input(e, autoTrigger, vk_evt_input_focus, vk_evt_input_click);
 				}
 			} else if (e.nodeName == "TEXTAREA") {
 				virtualKeyboardChrome_bind_input(e, autoTrigger, vt_evt_textarea_focus, vt_evt_textarea_click);
@@ -807,7 +807,7 @@ false);
 				}
 			}
 		}
-		
+
 		if (firstTime) {
 			if (top == self) {
 				var v = document.getElementById("virtualKeyboardChromeExtension");
@@ -1014,7 +1014,7 @@ false);
 			}
 		}
 	}
-	
+
 	setTimeout(init_virtualKeyboardChromeExtension_false_iframe, refreshTime);
 }
 
