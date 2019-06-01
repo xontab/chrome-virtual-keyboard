@@ -1,4 +1,4 @@
-var virtualKeyboardChromeExtensionClickedElem = null;
+ var virtualKeyboardChromeExtensionClickedElem = null;
 var virtualKeyboardChromeExtensionElemType = "input";
 var virtualKeyboardChromeExtensionPagePadding = false;
 var virtualKeyboardChromeExtensionState = false;
@@ -65,9 +65,6 @@ function set_default() {
     /* Function called at the very beginning to set some default
      *  custom values in the localStorage to "customize" the keybaord
      *  when it gets loaded the first time.
-     *
-     *  Comment out the "openedFirstTime" key, to get back to original
-     *  behaviour.
      */
 
     // First check if the default settings are there already.
@@ -947,7 +944,9 @@ function init_virtualKeyboardChromeExtension(firstTime) {
                             var e = this.getAttribute("_key");
                             if ((virtualKeyboardChromeExtensionRepeatLetters) || (e == "Backspace")) {
                                 var virtualKeyboardChromeExtensionBackspaceTimerCount = 0;
+                                console.log(e);
                                 if (virtualKeyboardChromeExtensionBackspaceTimer != null) {
+                                    console.log(virtualKeyboardChromeExtensionBackspaceTimer);
                                     clearInterval(virtualKeyboardChromeExtensionBackspaceTimer);
                                 }
                                 virtualKeyboardChromeExtensionBackspaceTimer = setInterval(function () {
@@ -960,8 +959,15 @@ function init_virtualKeyboardChromeExtension(firstTime) {
                             }
                             virtualKeyboardChrome_prevent(ent);
                         };
-                        e[i].ontouchmove = virtualKeyboardChrome_prevent;
-                        e[i].ontouchend = virtualKeyboardChrome_prevent;
+			// Do not clear iterval during touchmove
+                        e[i].ontouchmove = function (ent) {
+                            virtualKeyboardChrome_prevent(ent);
+                        };
+			// Clear interval on touchend – otherwise char repetition will continue forever
+                        e[i].ontouchend = function (ent) {
+                            clearInterval(virtualKeyboardChromeExtensionBackspaceTimer);
+                            virtualKeyboardChrome_prevent(ent);
+                        };
                     } else {
                         e[i].onmousedown = function (ent) {
                             var e = this.getAttribute("_key");
