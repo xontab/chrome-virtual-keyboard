@@ -11,7 +11,7 @@ This extension is ideal for touch screen devices. This keyboard works like an iO
 For more details visit: http://apps.xontab.com/VirtualKeyboard/
 
 ## Known Limitations
-Due to security reasons, communication between frames is restricted in Google Chrome.  The only way to enable the keyboard in cross-origin iFrame scenarios, you need to disable web security using a flag.  For more details visit: https://stackoverflow.com/questions/36016952/chrome-49-plus-disable-web-security
+Due to security reasons, communication between frames is restricted in Google Chrome.  The only way to enable the keyboard in cross-origin iFrame scenarios, you need to disable web security using a flags `--disable-web-security --disable-site-isolation-trials --user-data-dir=/tmp`. Warning, these flags make a Chrome browser very vulnerable.  
 
 ## Future versions
 
