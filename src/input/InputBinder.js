@@ -188,11 +188,12 @@ function handleDocumentFocus(event) {
   const element = event.target;
   if (!element || !isSupportedInput(element)) return;
 
-  // Only act on unbound elements - this is a fallback for when
-  // MutationObserver fails after long uptime
-  // bindInput will handle triggering focus since activeElement is set
+  // If not bound, bind it now and trigger focus explicitly
+  // (bindInput's activeElement check may not work reliably across all contexts)
   if (!isBound(element)) {
     bindInput(element);
+    const inputType = getInputType(element);
+    handleFocus(element, inputType, true);
   }
 }
 
