@@ -87,5 +87,6 @@ Privacy policy: https://github.com/xontab/chrome-virtual-keyboard/blob/master/PR
 | `screenshot-2-floating-keyboard-1280x800.png` | Screenshot 2 | 1280×800 |
 | `screenshot-3-number-pad-1280x800.png` | Screenshot 3 | 1280×800 |
 | `screenshot-4-settings-dark-1280x800.png` | Screenshot 4 | 1280×800 |
+| `screenshot-5-popup-1280x800.png` | Screenshot 5 | 1280×800 |
 | `promo-small-440x280.png` | Small promo tile | 440×280 |
 | `promo-marquee-1400x560.png` | Marquee promo tile | 1400×560 |
