@@ -1,0 +1,82 @@
+/* Settings page preview: the real keyboard, scaled down and not interactive. */
+/* A normal-height screen, so the keyboard's compact styles for short screens don't kick in.
+   The settings page shows only the part from the field down, which preview.js measures. */
+html, body {
+	margin: 0;
+	width: 100%;
+	height: 960px;
+	overflow: hidden;
+	background: #eef2f8;
+	font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	pointer-events: none;
+	user-select: none;
+}
+#vkpPage {
+	position: absolute;
+	left: 40px;
+	top: 448px;
+	z-index: 1;
+}
+#vkpField {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	background: #fff;
+	border-radius: 14px;
+	padding: 16px 20px;
+	box-shadow: 0 4px 18px rgba(20, 40, 80, .08);
+	width: 560px;
+	position: relative;
+}
+.vkpLabel {
+	color: #5a6475;
+	font-size: 17px;
+}
+.vkpInput {
+	flex: 1;
+	border: 2px solid #2F6BD0;
+	border-radius: 10px;
+	padding: 10px 14px;
+	font-size: 22px;
+	color: #1f2430;
+	display: flex;
+	align-items: center;
+}
+.vkpCaret {
+	width: 2px;
+	height: 26px;
+	background: #2F6BD0;
+	margin-left: 1px;
+}
+#vkpOffNote {
+	display: none;
+	margin-top: 18px;
+	color: #5a6475;
+	font-size: 18px;
+}
+body.vkpOff #vkpOffNote {
+	display: block;
+}
+/* On-demand mode: the keyboard icon that appears next to a field. */
+#virtualKeyboardChromeExtensionOverlayDemand.vkpShown {
+	display: block !important;
+	opacity: 1 !important;
+	position: absolute !important;
+	left: 660px !important;
+	top: 462px;
+	margin: 0 !important;
+}
+#virtualKeyboardChromeExtensionUrlBar.vkpShown {
+	top: var(--vkp-url-top, 420px) !important;
+}
+/* The part of the keyboard the hovered setting affects. */
+.vkpHighlight {
+	outline: 4px solid #224f9b !important;
+	outline-offset: 2px;
+	border-radius: 8px;
+	animation: vkpPulse 1.2s ease-in-out infinite;
+}
+@keyframes vkpPulse {
+	0%, 100% { box-shadow: 0 0 0 0 rgba(34, 79, 155, .7); }
+	50% { box-shadow: 0 0 0 10px rgba(34, 79, 155, 0); }
+}

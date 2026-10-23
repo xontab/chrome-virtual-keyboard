@@ -1,261 +1,402 @@
+:root {
+    color-scheme: light dark;
+    --bg: #f3f5f9;
+    --card: #ffffff;
+    --card-border: #e3e8f0;
+    --text: #1f2430;
+    --muted: #667085;
+    --brand: #224f9b;
+    --brand-soft: rgba(34, 79, 155, 0.12);
+    --field-bg: #ffffff;
+    --field-border: #cfd7e6;
+    --row-hover: #f6f8fc;
+    --switch-off: #cbd2de;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 6px 20px rgba(16, 24, 40, 0.06);
+    --topbar-bg: rgba(255, 255, 255, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #16181d;
+        --card: #1f2228;
+        --card-border: #2d313a;
+        --text: #e6e8ec;
+        --muted: #9aa1ad;
+        --brand: #224f9b;
+        --brand-soft: rgba(34, 79, 155, 0.16);
+        --field-bg: #262a31;
+        --field-border: #3a3f4a;
+        --row-hover: #252931;
+        --switch-off: #4a505c;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+        --topbar-bg: rgba(31, 34, 40, 0.85);
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
 body.loaded {
     opacity: 1;
 }
 
-#page {
-    -webkit-transition: all 0.55s ease-out;
-    -webkit-transform: scale(0.9) translate3d(-230px, 0, 0);
-    min-width: 1000px;
-    padding: 30px;
-    padding-top: 80px;
-    padding-left: 60px;
+/* Header */
+#topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 28px;
+    background: var(--topbar-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
 }
 
-body.loaded #page {
-    -webkit-transform: translate3d(0, 0, 0) perspective(800);
-}
-
-select::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-}
-
-select::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background-color: #eee;
-}
-
-select::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
-    -webkit-transition: all 0.2s;
-    background-color: #666;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: #333;
-    background-color: #fefefe;
-    opacity: 0;
-    -webkit-transition: all 1.5s;
+#logo {
+    display: block;
 }
 
 h1 {
-    background-color: #20509F;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    font-size: 24px;
-    padding: 12px;
-    padding-left: 70px;
-    color: #fff;
-    z-index: 10;
-}
-
-h1,
-h2 {
     margin: 0;
-    font-weight: normal;
-    letter-spacing: -1px;
-}
-
-h2 {
     font-size: 20px;
-    margin-bottom: 10px;
-    color: #555;
-    margin-top: 30px;
-}
-
-#options {
-    margin-top: 30px;
-    font-size: 14px;
-}
-
-#links a#footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 1px solid #BBB;
-    padding: 20px 30px;
-    font-size: 13px;
-    color: #222;
-    text-decoration: none;
-    border-bottom: 0;
-    margin-bottom: 0;
-}
-
-#links a#footer:hover {
-    background-color: #eee;
-}
-
-#links a#footer span {
-    background-image: url(https://xontab.com/res/images/logo/header.png);
-    background-repeat: no-repeat;
-    background-size: 50px;
-    height: 50px;
-    padding-left: 60px;
-    font-size: 23px;
-    margin-top: 12px;
-    padding-top: 8px;
-    text-decoration: none;
-    color: #20509F;
-    letter-spacing: -1px;
-    margin-left: 10px;
-    display: inline-block;
-}
-
-select,
-input[type='checkbox'],
-input[type='radio'] {
-    -webkit-appearance: none;
-    -webkit-user-select: none;
-    background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 2px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
-    color: #444;
-    font: inherit;
-    margin: 0 1px 0 0;
-    text-shadow: 0 1px 0 rgb(240, 240, 240);
-}
-
-select,
-select:hover,
-select:focus {
-    background: #fff;
-    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
-    background-image: none !important;
-}
-
-:enabled:hover:-webkit-any( select, input[type='checkbox'], input[type='radio'], :-webkit-any( button, input[type='button'], input[type='submit']):not(.custom-appearance):not(.link-button)) {
-    background-image: -webkit-linear-gradient(#f0f0f0, #f0f0f0 38%, #e0e0e0);
-    border-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.95);
-    color: black;
-}
-
-input[type='checkbox']:checked::before {
-    -webkit-user-select: none;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAcklEQVQY02NgwA/YoJgoEA/Es4DYgJBCJSBeD8SboRinBiYg7kZS2IosyQ/Eakh8LySFq4FYHFlxGRBvBOJYqMRqJMU+yApNkSRAeC0Sux3dfSCTetE0wKyXxOWhMKhTYIr9CAUXyJMzgLgBagBBgDPGAI2LGdNt0T1AAAAAAElFTkSuQmCC');
-    background-size: 100% 100%;
-    content: '';
-    display: block;
-    height: 100%;
-    width: 100%;
-}
-
-input[type='checkbox'] {
-    bottom: 2px;
-    height: 13px;
-    position: relative;
-    vertical-align: middle;
-    width: 13px;
-}
-
-select {
-    border: 1px solid #999;
-    border-radius: 3px;
-}
-
-select,
-input,
-button {
-    -webkit-transition: all 0.3s;
-    outline: none;
-}
-
-select:focus,
-input:focus,
-button:active {
-    border: 1px solid #15C !important;
-}
-
-#links {
-    position: absolute;
-    top: 35px;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    padding-right: 220px;
-    box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.1);
-    padding-left: 25px;
-}
-
-#links iframe {
-    position: absolute;
-    right: 0;
-    top: 50px;
-    border: 0;
-}
-
-#links a {
-    display: inline-block;
-    text-decoration: none;
-    -webkit-transition: all 0.4s;
-    color: #888;
-    border-bottom: 1px solid #fff;
-    padding: 2px 5px;
-    margin: 5px 0;
-    font-size: 13px;
-}
-
-#links a:hover {
-    border-bottom: 1px solid #333;
-    color: #333;
-}
-
-select {
-    padding: 5px;
-}
-
-select.layout {
-    height: 200px;
-    width: 150px;
-}
-
-label {
-    padding: 7px 0;
-    display: block;
-}
-
-th {
-    font-size: 15px;
-    text-align: left;
-    font-weight: normal;
-    padding-top: 20px;
-}
-
-button {
-    -webkit-appearance: none;
-    -webkit-user-select: none;
-    background-image: -webkit-linear-gradient(#EDEDED, #EDEDED 38%, #DEDEDE);
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 2px;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
-    color: #000;
-    font: inherit;
-    margin: 5px 10px;
-    text-shadow: 0 1px 0 #F0F0F0;
-    padding: 5px 10px;
-    -webkit-transition: all 0.4s;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    flex: 1;
 }
 
 #changeEffect {
-    -webkit-transition: all 0.4s;
-    font-size: 1px;
+    color: var(--brand);
+    font-weight: 600;
     opacity: 0;
+    transition: opacity 0.3s;
 }
 
 #changeEffect.show {
     opacity: 1;
+}
+
+/* Kiosk mode has no tab strip or window controls, so the page needs its own way out. */
+#closeOptions {
     font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* Two columns: settings, and a preview that stays in view. */
+#page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 540px);
+    gap: 24px;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 24px 28px 40px;
+    align-items: start;
+}
+
+#previewPanel {
+    position: sticky;
+    top: 84px;
+}
+
+@media (max-width: 900px) {
+    #page {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #previewPanel {
+        position: static;
+        order: -1;
+    }
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Setting rows */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px;
+    margin: 0 -10px;
+    border-radius: 10px;
+    transition: background-color 0.15s;
+}
+
+label.row {
+    cursor: pointer;
+}
+
+.row:hover,
+.row.active {
+    background: var(--row-hover);
+}
+
+.row.sub {
+    padding-left: 30px;
+}
+
+.rowText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.rowTitle {
+    font-weight: 500;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12.5px;
+}
+
+/* Form controls */
+select,
+input[type="text"],
+input[type="search"] {
+    font: inherit;
+    color: var(--text);
+    background: var(--field-bg);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="search"]:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+button {
+    font: inherit;
+    color: var(--text);
+    background: var(--field-bg);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+button:hover {
+    border-color: var(--brand);
 }
 
 button:active {
-    background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+    background: var(--brand-soft);
+}
+
+/* Checkboxes as switches */
+input.toggle {
+    appearance: none;
+    flex: none;
+    position: relative;
+    width: 40px;
+    height: 22px;
+    margin: 0;
+    border-radius: 11px;
+    background: var(--switch-off);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+input.toggle::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s;
+}
+
+input.toggle:checked {
+    background: var(--brand);
+}
+
+input.toggle:checked::before {
+    transform: translateX(18px);
+}
+
+input.toggle:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="range"] {
+    width: 180px;
+    accent-color: var(--brand);
+}
+
+.sliderValue {
+    min-width: 52px;
+    text-align: right;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Keyboard mode as a segmented control, like the toolbar popup. */
+.segments {
+    flex: none;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--row-hover);
+    border: 1px solid var(--card-border);
+}
+
+.segments button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    min-width: 92px;
+    font-size: 13px;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+    padding: 8px 10px 7px;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.segments button:hover {
+    color: var(--text);
+    border-color: transparent;
+}
+
+.segments button.active {
+    color: #fff;
+    background: var(--brand);
+    font-weight: 600;
+}
+
+.segments button:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
+/* Layouts */
+.layouts {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: center;
+}
+
+.layoutColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.layoutColumn .hint {
+    min-height: 34px;
+}
+
+select.layout {
+    height: 210px;
+    padding: 4px;
+}
+
+select.layout option {
+    padding: 5px 8px;
+    border-radius: 6px;
+}
+
+.layoutButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Preview */
+#previewFrame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: #eef2f8;
+}
+
+#preview {
+    display: block;
+    width: 1000px;
+    height: 960px;
+    max-width: none;
+    border: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+}
+
+#previewHelp {
+    margin: 12px 2px 0;
+    color: var(--muted);
+    line-height: 1.45;
+    min-height: 60px;
+}
+
+/* Footer */
+#links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding: 4px 2px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+#links a {
+    color: var(--brand);
+    text-decoration: none;
+}
+
+#links a:hover {
+    text-decoration: underline;
+}
+
+#links .credits {
+    flex-basis: 100%;
 }

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Store/app icon (128px). Small sizes use icon-small.svg, drawn on a pixel grid. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2F6BD0"/>
+      <stop offset="1" stop-color="#1A3F7A"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E3E9F4"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="28" width="96" height="72" rx="14" fill="url(#tile)"/>
+  <g fill="#0F2850" opacity="0.5">
+    <rect x="20" y="38" width="16" height="16" rx="4"/><rect x="38" y="38" width="16" height="16" rx="4"/><rect x="56" y="38" width="16" height="16" rx="4"/><rect x="74" y="38" width="16" height="16" rx="4"/><rect x="92" y="38" width="16" height="16" rx="4"/>
+    <rect x="20" y="58" width="16" height="16" rx="4"/><rect x="38" y="58" width="16" height="16" rx="4"/><rect x="56" y="58" width="16" height="16" rx="4"/><rect x="74" y="58" width="16" height="16" rx="4"/><rect x="92" y="58" width="16" height="16" rx="4"/>
+    <rect x="38" y="78" width="52" height="12" rx="4"/>
+  </g>
+  <g fill="url(#cap)">
+    <rect x="20" y="36" width="16" height="16" rx="4"/><rect x="38" y="36" width="16" height="16" rx="4"/><rect x="56" y="36" width="16" height="16" rx="4"/><rect x="74" y="36" width="16" height="16" rx="4"/><rect x="92" y="36" width="16" height="16" rx="4"/>
+    <rect x="20" y="56" width="16" height="16" rx="4"/><rect x="38" y="56" width="16" height="16" rx="4"/><rect x="56" y="56" width="16" height="16" rx="4"/><rect x="74" y="56" width="16" height="16" rx="4"/><rect x="92" y="56" width="16" height="16" rx="4"/>
+    <rect x="38" y="76" width="52" height="12" rx="4"/>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#1A3F7A" text-anchor="middle">
+    <text x="28" y="48">Q</text><text x="46" y="48">W</text><text x="64" y="48">E</text><text x="82" y="48">R</text><text x="100" y="48">T</text>
+    <text x="28" y="68">A</text><text x="46" y="68">S</text><text x="64" y="68">D</text><text x="82" y="68">F</text><text x="100" y="68">G</text>
+  </g>
+</svg>
