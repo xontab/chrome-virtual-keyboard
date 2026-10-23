@@ -17,16 +17,16 @@ Tap any text field and the keyboard slides up. Tap Enter to submit, or the close
 
 WORKS EVERYWHERE YOU TYPE
 • Normal text, search, email, URL and password fields
-• Rich text editors: Quill, CKEditor 5, TinyMCE, ProseMirror / Tiptap, Lexical and other contenteditable editors
+• Rich text editors, such as email composers and document and comment boxes
 • Editors and forms inside frames, including frames from other sites
-• Apps built with Vue, React, Ionic and other frameworks: they see real input events, so their data stays in sync
+• Modern web apps, which receive real input events so what you type is saved
 • Fields added to the page after it loads
 
 KEYBOARDS FOR EVERY TASK
 • Full-width keyboard, or a smaller floating keyboard you can drag anywhere
 • Number pad for phone and number fields, and an @ key for email fields
 • Numbers and symbols panel
-• 15 layouts: English, French, German, Italian, Spanish, Polish, Czech, Hungarian, Norwegian, Swedish, Slovenian, Russian, Ukrainian, Korean and Tamil, with accented letters on press-and-hold
+• 15 keyboard layouts, with accented letters on press-and-hold
 • Switch layouts from the keyboard's menu
 
 BUILT FOR KIOSKS AND TOUCH SCREENS
@@ -51,8 +51,8 @@ Privacy policy: https://github.com/xontab/chrome-virtual-keyboard/blob/master/PR
 
 ## What's new in 2.0.0
 • Rebuilt for Manifest V3
-• Types into rich text editors (Quill, CKEditor 5, TinyMCE, ProseMirror, Lexical) and frames from other sites
-• Works with Vue, Ionic and other framework-bound fields
+• Types into rich text editors and into frames from other sites
+• Works with fields in modern web apps
 • Fixed: cloned and dynamically added fields not getting the keyboard
 • Fixed: number panel overflowing on portrait screens
 • Fixed: intelligent scroll leaving blank space and not working in dialogs
