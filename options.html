@@ -1,29 +1,51 @@
 <!DOCTYPE HTML>
-<html id="t" i18n-values="dir:textdirection">
+<html>
 
 <head>
 	<meta charset="utf-8">
-	<title i18n-content="optionsPageTitle">Virtual Keyboard Settings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Virtual Keyboard Settings</title>
 	<link href="options/styles.css" rel="stylesheet" />
 	<script src="options/script.js"></script>
 </head>
 <body>
-	<h1>Virtual Keyboard Settings</h1>
+	<header id="topbar">
+		<img id="logo" src="images/icon-small.svg" alt="" width="36" height="36">
+		<h1>Virtual Keyboard Settings</h1>
+		<span id="changeEffect" role="status">Saved</span>
+		<button id="closeOptions" title="Close settings">Close &#x2715;</button>
+	</header>
+
 	<div id="page">
-		<div id="navigation">
-			<div id="changeEffect">Settings have been saved. Note: Your changes will take effect when you reload page</div>
-		</div>
-		<div id="options">
-			<h2>Keyboard Layout</h2>
-			<table cellpadding="0" cellspacing="0">
-				<tr>
-					<th>Available Layouts:</th>
-					<th></th>
-					<th>Chosen Layouts:</th>
-				</tr>
-				<tr>
-					<td>
-						<select id="al" multiple="multiple" class="layout" width="100" height="200">
+		<main id="options">
+			<section class="card">
+				<h2>Keyboard mode</h2>
+				<div class="row" data-preview="demand" data-help="Auto: the keyboard opens whenever you tap a text field. Toggle: a small keyboard icon appears next to the field, and the keyboard opens only when you tap it. Off: the keyboard never opens.">
+					<div class="rowText">
+						<span class="rowTitle">When to show the keyboard</span>
+						<span class="hint">Also in the toolbar popup</span>
+					</div>
+					<!-- The select holds the saved value; the buttons below set it. -->
+					<select id="keyboardEnabled" _setting="keyboardEnabled" class="setting" hidden>
+						<option value="true">Auto</option>
+						<option value="demand">Toggle</option>
+						<option value="false">Off</option>
+					</select>
+					<div class="segments" id="keyboardModes" role="radiogroup" aria-label="Keyboard mode">
+						<button type="button" role="radio" data-mode="true"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/></svg>Auto</button>
+						<button type="button" role="radio" data-mode="demand"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5" stroke-dasharray="2.6 2.2"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/></svg>Toggle</button>
+						<button type="button" role="radio" data-mode="false"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/><path d="M3.5 3.5l17 17"/></svg>Off</button>
+					</div>
+				</div>
+			</section>
+
+			<section class="card">
+				<h2>Layouts</h2>
+				<div class="layouts" data-preview="layouts" data-help="The first chosen layout opens by default. With more than one, switch between them from the gear key on the keyboard.">
+					<div class="layoutColumn">
+						<label class="rowTitle" for="layoutSearch">Available</label>
+						<input type="search" id="layoutSearch" placeholder="Search layouts" autocomplete="off" />
+						<select id="al" multiple="multiple" class="layout" aria-label="Available layouts">
 							<option value="en">English (QWERTY)</option>
 							<option value="fr">French (AZERTY)</option>
 							<option value="de">German (QWERTZ)</option>
@@ -40,83 +62,112 @@
 							<option value="cs">Czech (QWERTY)</option>
 							<option value="ua">Ukrainian (QWERTY)</option>
 						</select>
-					</td>
-					<td>
-						<button id="kl_add">&gt;</button>
-						<br />
-						<button id="kl_remove">&lt;</button>
-					</td>
-					<td>
-						<select id="sl" multiple="multiple" class="layout" width="100" height="200">
+					</div>
+					<div class="layoutButtons">
+						<button id="kl_add" title="Add the selected layouts">Add &#x203A;</button>
+						<button id="kl_remove" title="Remove the selected layouts">&#x2039; Remove</button>
+					</div>
+					<div class="layoutColumn">
+						<span class="rowTitle">Chosen</span>
+						<span class="hint">Double-click a layout to add or remove it</span>
+						<select id="sl" multiple="multiple" class="layout" aria-label="Chosen layouts">
 							<option value="en">English (QWERTY)</option>
 						</select>
-					</td>
-				</tr>
-			</table>
-			<br />
-			<h2>Behaviour</h2>
-            <label>
-                <input type="text" id="refreshTime" _setting="refreshTime" class="setting" value="1000" /> Time when the DOM should be rescanned for Inputs
-            </label>		
-			<label>
-				<input type="checkbox" id="capsLock" _setting="capsLock" class="setting" value="true" _default="true" /> Enable Caps Lock</label>
-			<label>
-				<input type="checkbox" id="intelligentScroll" _setting="intelligentScroll" class="setting" value="true" _default="true"
-				/> Enable Intelligent Auto-Scrolling (Scrolls the page automatically when a text field is in focus)</label>
-			<label>
-				<input type="checkbox" id="repeatLetters" _setting="repeatLetters" class="setting" value="true" _default="false" /> Enable Auto letter/character Repetition </label>
-			<label>
-				<input type="checkbox" id="touchEvents" _setting="touchEvents" class="setting" value="true" _changed="checkbox_touchEvents"
-				/> Use Touch events instead of Mouse events</label>
-			<div id="autoTriggerPH">
-				<label>
-					<input type="checkbox" id="autoTrigger" _setting="autoTrigger" class="setting" value="true" _changed="checkbox_autoTrigger"
-					/> Enable Auto Clicking via Mouse Hover</label>
-				<div id="autoTriggerOnPH">
-					<label id="autoTriggerAfterLabel">
-						<span style="vertical-align: top;">Trigger auto clicking after: </span>
-						<input type="range" min="0.1" max="30" step="0.1" style="width: 260px" id="autoTriggerAfter"
-						 _setting="autoTriggerAfter" class="setting" value="1.0" _default="1.0	" _changed="slider_autoTriggerAfter" />
-						<span style="vertical-align: top;" id="autoTriggerAfterValue"></span>
-					</label>
-					<label>
-						<input type="checkbox" id="autoTriggerLinks" _setting="autoTriggerLinks" class="setting" value="true" /> Enable Auto Clicking via Mouse Hover on Anchor tags (Links)</label>
+					</div>
 				</div>
+			</section>
+
+			<section class="card">
+				<h2>Appearance</h2>
+				<label class="row" data-preview="handles" data-help="A smaller keyboard that floats over the page. Drag it by the handles on its sides; it remembers where you put it.">
+					<span class="rowText"><span class="rowTitle">Small floating keyboard</span><span class="hint">Can be dragged anywhere on the screen</span></span>
+					<input type="checkbox" id="smallKeyboard" _setting="smallKeyboard" class="setting toggle" value="true" _changed="checkbox_smallKeyboard" />
+				</label>
+				<div class="row" id="zoomLevelLabel" data-preview="keyboard" data-help="Makes the full-size keyboard bigger or smaller. Auto fits the keyboard to the screen.">
+					<span class="rowText"><span class="rowTitle">Size</span><span class="hint">Full-size keyboard only</span></span>
+					<span class="slider">
+						<input type="range" min="0" max="1.8" step="0.05" id="zoomLevel" _setting="zoomLevel" class="setting" value="0" _default="0" _changed="slider_zoom" aria-label="Keyboard size" />
+						<span class="sliderValue" id="zoomLevelValue"></span>
+					</span>
+				</div>
+				<label class="row" data-preview="url" data-help="Adds a URL key. It opens an address bar above the page so you can go to a website, handy when the browser's own address bar is hidden, as in kiosk mode.">
+					<span class="rowText"><span class="rowTitle">URL key</span><span class="hint">Type a web address from the keyboard</span></span>
+					<input type="checkbox" id="urlButton" _setting="urlButton" class="setting toggle" value="true" />
+				</label>
+			</section>
+
+			<section class="card">
+				<h2>Typing &amp; input</h2>
+				<label class="row" data-preview="shift" data-help="On: Shift stays on until you tap it again, like Caps Lock. Off: Shift turns off after one letter.">
+					<span class="rowText"><span class="rowTitle">Caps Lock</span><span class="hint">Shift stays on until tapped again</span></span>
+					<input type="checkbox" id="capsLock" _setting="capsLock" class="setting toggle" value="true" _default="true" />
+				</label>
+				<label class="row" data-preview="backspace" data-help="Holding a key repeats it after half a second, like a physical keyboard. Applies to all letter, number and symbol keys and Backspace.">
+					<span class="rowText"><span class="rowTitle">Repeat keys when held</span><span class="hint">Applies to all keys</span></span>
+					<input type="checkbox" id="repeatLetters" _setting="repeatLetters" class="setting toggle" value="true" _default="false" />
+				</label>
+				<label class="row" data-preview="field" data-help="Scrolls the page, or the dialog the field is in, so the field you're typing in isn't hidden behind the keyboard. The scroll position is restored when the keyboard closes.">
+					<span class="rowText"><span class="rowTitle">Keep the field in view</span><span class="hint">Scrolls the field above the keyboard</span></span>
+					<input type="checkbox" id="intelligentScroll" _setting="intelligentScroll" class="setting toggle" value="true" _default="true" />
+				</label>
+				<label class="row" data-preview="keyboard" data-help="Use on touch screens. Keys respond to touches instead of mouse clicks, which avoids delays on some touch hardware.">
+					<span class="rowText"><span class="rowTitle">Touch screen mode</span><span class="hint">Use touch events instead of mouse events</span></span>
+					<input type="checkbox" id="touchEvents" _setting="touchEvents" class="setting toggle" value="true" _changed="checkbox_touchEvents" />
+				</label>
+				<div id="autoTriggerPH">
+					<label class="row" data-preview="keyboard" data-help="For setups with only a pointer, such as head or eye tracking: resting the pointer on a key presses it.">
+						<span class="rowText"><span class="rowTitle">Click by hovering</span><span class="hint">Resting the pointer on a key presses it</span></span>
+						<input type="checkbox" id="autoTrigger" _setting="autoTrigger" class="setting toggle" value="true" _changed="checkbox_autoTrigger" />
+					</label>
+					<div id="autoTriggerOnPH">
+						<div class="row sub" id="autoTriggerAfterLabel" data-preview="keyboard" data-help="How long the pointer has to rest on a key before it is pressed.">
+							<span class="rowText"><span class="rowTitle">Hover delay</span></span>
+							<span class="slider">
+								<input type="range" min="0.1" max="30" step="0.1" id="autoTriggerAfter" _setting="autoTriggerAfter" class="setting" value="1.0" _default="1.0" _changed="slider_autoTriggerAfter" aria-label="Hover delay" />
+								<span class="sliderValue" id="autoTriggerAfterValue"></span>
+							</span>
+						</div>
+						<label class="row sub" data-help="Resting the pointer on a link on the page clicks it too.">
+							<span class="rowText"><span class="rowTitle">Also click links by hovering</span></span>
+							<input type="checkbox" id="autoTriggerLinks" _setting="autoTriggerLinks" class="setting toggle" value="true" />
+						</label>
+					</div>
+				</div>
+			</section>
+
+			<section class="card">
+				<h2>Advanced</h2>
+				<label class="row" data-preview="keyboard" data-help="Animates the keyboard with the graphics card. Turn off if the keyboard flickers or animates poorly.">
+					<span class="rowText"><span class="rowTitle">Hardware acceleration</span><span class="hint">Smoother slide-in animation</span></span>
+					<input type="checkbox" id="hardwareAcceleration" _setting="hardwareAcceleration" class="setting toggle" value="true" _default="true" />
+				</label>
+				<div class="row" data-help="How often the page is checked for new text fields. Fields also get the keyboard as soon as they're focused, so you rarely need to change this.">
+					<span class="rowText"><span class="rowTitle">Scan for new fields every</span></span>
+					<span class="slider">
+						<input type="range" min="100" max="5000" step="100" id="refreshTime" _setting="refreshTime" class="setting" value="500" _changed="slider_refreshTime" aria-label="Scan interval" />
+						<span class="sliderValue" id="refreshTimeValue"></span>
+					</span>
+				</div>
+			</section>
+
+			<footer id="links">
+				<a target="_blank" href="https://apps.xontab.com/Suggest/VirtualKeyboard?from=VKO">Suggest a feature</a>
+				<a target="_blank" href="https://apps.xontab.com/?from=VKO">More extensions</a>
+				<a target="_blank" href="https://xontab.com?from=VKO">Developer's website</a>
+				<a target="_blank" href="https://github.com/xontab/chrome-virtual-keyboard/blob/master/PRIVACY.md">Privacy policy</a>
+				<span class="credits">Developed by Shaun Tabone &middot; Thanks to Stuart Wright</span>
+			</footer>
+		</main>
+
+		<aside id="previewPanel">
+			<div class="card">
+				<h2>Preview</h2>
+				<div id="previewFrame">
+					<iframe id="preview" src="preview.html" title="Keyboard preview" tabindex="-1"></iframe>
+				</div>
+				<p id="previewHelp">Point at a setting to see what it changes.</p>
 			</div>
-			<h2>User Interface (UI)</h2>
-			<label>
-				<input type="checkbox" id="hardwareAcceleration" _setting="hardwareAcceleration" class="setting" value="true" _default="true"
-				/> Enable Hardware Acceleration</label>
-			<label>
-				<input type="checkbox" id="toogleKeyboard" _setting="toogleKeyboard" class="setting" value="true" _default="true" /> Enable Toggle Keyboard page action (Keyboard icon in URL bar)</label>
-			<label>
-				<input type="checkbox" id="urlButton" _setting="urlButton" class="setting" value="true" /> Enable URL Button (Allows you to type a new website address using this keyboard)</label>
-			<label>
-				<input type="checkbox" id="smallKeyboard" _setting="smallKeyboard" class="setting" value="true" _changed="checkbox_smallKeyboard"
-				/> Enable Small Keyboard Layout (Can also be moved!)</label>
-			<label id="zoomLevelLabel">
-				<span style="vertical-align: top;">Zoom level: </span>
-				<input type="range" min="0" max="1.8" step="0.05" id="zoomLevel" _setting="zoomLevel" style="width: 260px"
-				 class="setting" value="0" _default="0" _changed="slider_zoom" />
-				<span style="vertical-align: top;" id="zoomLevelValue"></span>
-			</label>
-		</div>
-		<div id="links">
-			<h2 style="margin-top: 60px;">Links</h2>
-			<a target="_blank" href="http://apps.xontab.com/Suggest/VirtualKeyboard?from=VKO">Suggest a Feature</a>
-			<br />
-			<a target="_blank" href="https://apps.xontab.com/?from=VKO">FREE Extensions &amp; Applications</a>
-			<br />
-			<a target="_blank" href="http://xontab.com?from=VKO">Developer's Website</a>
-			<br />
-			<h2 style="margin-top: 40px">Credits</h2>
-			<a target="_blank" href="#">Stuart Wright</a>
-			<a id="footer" target="_blank" href="http://xontab.com?from=VKO">
-				Developed by:
-				<span>Shaun Tabone</span> 
-			</a>
-			<iframe src="http://xontab.com/advert.html" width="210" height="650" />
-		</div>
+		</aside>
 	</div>
 </body>
 

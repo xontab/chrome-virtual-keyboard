@@ -1,28 +1,143 @@
-<script src="toggle.js"></script>
-<style>
-	body { font-family: 'Segoe UI', Tahoma, sans-serif; width: 300px; margin: 0; padding: 0; -webkit-user-select: none; }
-	ul, li { list-style: none; margin: 0; padding: 0; }
-	li { cursor: pointer; padding: 10px; font-size: 15px; margin: 5px 0; color: #999; border-left: 3px solid transparent; -webkit-transition: all 0.3s; }
-	li:hover { color: #555; border-left: 6px solid #555; }
-	li:active, li.active { color: #000; border-left: 6px solid #000; }
-	ul li ul { overflow: hidden; }
-	ul li ul li {
-		float: left;
-		border: 1px solid #999;
-		border-radius: 3px;
-		margin-left: 3px;
-		margin-top: 10px;
-		font-size: 13px;
-	}
-</style>
-<ul>
-	<li>Toggle Keyboard 
-		<ul>
-			<li id="toggleOn">Always On</li>
-			<li id="toggleDemand">On-Demand</li>
-			<li id="toggleOff">Turn Off</li>
-		</ul>
-	</li>
-	<li id="goToUrl">Open URL bar</li>
-	<li id="settings">Open Virtual Keyboard Settings</li>
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="toggle.js"></script>
+	<style>
+		:root {
+			color-scheme: light dark;
+			--bg: #ffffff;
+			--text: #1f2430;
+			--muted: #667085;
+			--border: #e3e8f0;
+			--brand: #224f9b;
+			--brand-soft: rgba(34, 79, 155, 0.12);
+			--segment-bg: #f1f4f9;
+			--hover: #f6f8fc;
+		}
+		@media (prefers-color-scheme: dark) {
+			:root {
+				--bg: #1f2228;
+				--text: #e6e8ec;
+				--muted: #9aa1ad;
+				--border: #2d313a;
+				--brand: #224f9b;
+				--brand-soft: rgba(34, 79, 155, 0.16);
+				--segment-bg: #262a31;
+				--hover: #252931;
+			}
+		}
+		body {
+			width: 300px;
+			margin: 0;
+			font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+			font-size: 14px;
+			color: var(--text);
+			background: var(--bg);
+			user-select: none;
+		}
+		header {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 14px 16px 12px;
+			border-bottom: 1px solid var(--border);
+			font-weight: 600;
+			font-size: 15px;
+		}
+		header img {
+			display: block;
+		}
+		.section {
+			padding: 14px 16px;
+		}
+		.label {
+			color: var(--muted);
+			font-size: 12px;
+			margin-bottom: 8px;
+		}
+		/* Keyboard mode as a segmented control. */
+		.segments {
+			display: flex;
+			gap: 4px;
+			padding: 4px;
+			border-radius: 10px;
+			background: var(--segment-bg);
+		}
+		.segments button {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 3px;
+			font: inherit;
+			font-size: 13px;
+			color: var(--muted);
+			background: transparent;
+			border: 0;
+			border-radius: 7px;
+			padding: 8px 4px 7px;
+			cursor: pointer;
+			transition: background-color 0.15s, color 0.15s;
+		}
+		.segments button:hover {
+			color: var(--text);
+		}
+		.segments button.active {
+			color: #fff;
+			background: var(--brand);
+			font-weight: 600;
+		}
+		.actions {
+			border-top: 1px solid var(--border);
+			padding: 6px;
+		}
+		.actions button {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+			font: inherit;
+			color: var(--text);
+			text-align: left;
+			background: transparent;
+			border: 0;
+			border-radius: 8px;
+			padding: 9px 10px;
+			cursor: pointer;
+		}
+		.actions button:hover,
+		.segments button:focus-visible,
+		.actions button:focus-visible {
+			background: var(--hover);
+			outline: none;
+		}
+		.segments button.active:focus-visible {
+			background: var(--brand);
+			box-shadow: 0 0 0 3px var(--brand-soft);
+		}
+		.actions .icon {
+			flex: none;
+			color: var(--brand);
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<img src="images/icon-small.svg" alt="" width="26" height="26">
+		Virtual Keyboard
+	</header>
+	<div class="section">
+		<div class="label">Show the keyboard</div>
+		<div class="segments" role="group" aria-label="Keyboard mode">
+			<button id="toggleOn"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/></svg>Auto</button>
+			<button id="toggleDemand"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5" stroke-dasharray="2.6 2.2"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/></svg>Toggle</button>
+			<button id="toggleOff"><svg class="modeIcon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M6 9.5h.01M9.3 9.5h.01M12.6 9.5h.01M15.9 9.5h.01M7.6 12.5h.01M10.9 12.5h.01M14.2 12.5h.01M17.5 12.5h.01M8 15.5h8"/><path d="M3.5 3.5l17 17"/></svg>Off</button>
+		</div>
+	</div>
+	<div class="actions">
+		<button id="goToUrl"><svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Open URL bar</button>
+		<button id="settings"><svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</button>
+	</div>
+</body>
+</html>

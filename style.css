@@ -44,6 +44,8 @@
 	bottom: 0;
 	background-color: rgba(255,255,255,0.2);
 	background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(rgb(60, 60, 60)), to(rgb(145, 145, 145)));
+	cursor: move;
+	touch-action: none;
 }
 
 #virtualKeyboardChromeExtension.modeS #virtualKeyboardChromeExtensionDraggableRight{
@@ -58,7 +60,7 @@
 	position: absolute !important; 
 	width: 50px !important;
 	height: 35px !important;
-	background-image: url(/buttons/keyboard_1.png) !important;
+	background-image: url(/images/toolbar-on-24.png) !important;
 	background-position: center !important;
 	background-repeat: no-repeat !important;
 	cursor: pointer;
@@ -268,9 +270,16 @@
 {
 	margin: 5px 0 !important;
 }
-#virtualKeyboardChromeExtensionMainNumbers table td 
+/* 14 columns with 30px side padding are wider than a portrait screen, which pushed the
+   ABC/close keys off-screen (issue #46). Key labels are absolutely positioned, so the
+   cells can share the width evenly instead. */
+#virtualKeyboardChromeExtensionMainNumbers table
 {
-	padding: 30px 30px !important;
+	table-layout: fixed;
+}
+#virtualKeyboardChromeExtensionMainNumbers table td
+{
+	padding: 30px 0 !important;
 }
 #virtualKeyboardChromeExtension table td {
 	width: 8%;
@@ -481,4 +490,40 @@
 	margin: 0;
 	padding: 7px;
 	font-size: 20px;
+}
+/* Centre key labels at any key height: rows can stretch, e.g. the numbers panel matching the
+   letters panel's height. [class] matches the specificity of the per-key-type rules above. */
+#virtualKeyboardChromeExtension table td[class] span {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	padding-top: 0 !important;
+	line-height: 1 !important;
+}
+
+/* The layout and settings menu: a wrapping grid, so a long list of layouts stays on screen
+   (it scrolls if needed), with Settings across the bottom. */
+#virtualKeyboardChromeExtensionOverlaySettings {
+	max-width: min(460px, calc(100vw - 16px));
+	overflow-y: auto;
+	box-sizing: border-box;
+}
+#virtualKeyboardChromeExtensionOverlaySettingsUl {
+	display: grid !important;
+	grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+	gap: 4px;
+	min-width: 236px;
+}
+#virtualKeyboardChromeExtensionOverlaySettingsUl li {
+	float: none;
+	margin: 0;
+	padding: 16px 10px;
+	text-align: center;
+}
+#virtualKeyboardChromeExtensionOverlaySettingsUl li.current {
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+#virtualKeyboardChromeExtensionOverlaySettingsUl li.settingsItem {
+	grid-column: 1 / -1;
+	font-weight: normal;
 }
