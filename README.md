@@ -36,3 +36,9 @@ You can also suggest new features: https://apps.xontab.com/Suggest/VirtualKeyboa
 
 ## Privacy
 Virtual Keyboard does not collect or send anything you type. See the [privacy policy](PRIVACY.md).
+
+## Releasing
+1. Bump `version` in `manifest.json` and commit.
+2. Push a matching tag, e.g. `git tag v2.0.1 && git push origin v2.0.1`.
+
+The [publish workflow](.github/workflows/publish.yml) then builds the package with `build.sh`, uploads and publishes it to the Chrome Web Store, and creates the GitHub release. It needs the repository secrets `CLIENT_ID`, `CLIENT_SECRET`, `REFRESH_TOKEN` and `PUBLISHER_ID` (Chrome Web Store API credentials). To build the package locally, run `./build.sh`.

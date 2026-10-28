@@ -1,0 +1,52 @@
+# Publishes a version to the Chrome Web Store when its tag is pushed:
+#   git tag v2.0.1 && git push origin v2.0.1
+# The tag must match the version in manifest.json.
+#
+# Needs these repository secrets (Chrome Web Store API credentials):
+#   CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN  - OAuth client for the Chrome Web Store API
+#   PUBLISHER_ID                             - Chrome Web Store publisher ID
+name: Publish to Chrome Web Store
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the tag matches manifest.json
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          version=$(jq -r .version manifest.json)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match manifest.json version $version"
+            exit 1
+          fi
+
+      - name: Build the store package
+        run: ./build.sh
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Upload and publish to the Chrome Web Store
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+          PUBLISHER_ID: ${{ secrets.PUBLISHER_ID }}
+        run: npx --yes chrome-webstore-upload-cli@4.0.2 --source dist/virtual-keyboard-*.zip --extension-id pflmllfnnabikmfkkaddkoolinlfninn
+
+      - name: Create the GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/virtual-keyboard-*.zip --title "Version ${GITHUB_REF_NAME#v}" --generate-notes --latest
